@@ -1,0 +1,9 @@
+# Config Database
+quarkus.datasource.db-kind=postgresql
+quarkus.datasource.username=postgres
+quarkus.datasource.password=postgres
+quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/db
+quarkus.hibernate-orm.database.generation=validate
+
+# Config Flyway
+quarkus.flyway.migrate-at-start=true
