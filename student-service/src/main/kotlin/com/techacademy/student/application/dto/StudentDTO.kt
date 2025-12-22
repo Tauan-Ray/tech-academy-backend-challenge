@@ -4,7 +4,8 @@ import java.time.LocalDateTime
 
 data class StudentDTO(
     val id: Int? = null,
-    var name: String,
-    var email: String,
-    var createdAt: LocalDateTime? = null,
+    val name: String,
+    val email: String,
+    val classroomId: Int,
+    val createdAt: LocalDateTime? = null,
 )
