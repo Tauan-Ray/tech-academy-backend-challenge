@@ -4,7 +4,9 @@ import com.techacademy.student.application.dto.ClassroomDTO
 import com.techacademy.student.application.mapper.classroom.toDTO
 import com.techacademy.student.application.usecase.classroom.FindClassroomByIdentityUseCase
 import com.techacademy.student.domain.repository.ClassroomRepositoryPort
+import jakarta.enterprise.context.ApplicationScoped
 
+@ApplicationScoped
 class FindClassroomByIdentityService(
     private val classroomRepository: ClassroomRepositoryPort
 ): FindClassroomByIdentityUseCase {
