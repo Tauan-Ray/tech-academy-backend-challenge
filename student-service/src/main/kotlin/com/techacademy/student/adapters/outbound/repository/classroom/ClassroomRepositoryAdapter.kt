@@ -3,7 +3,9 @@ package com.techacademy.student.adapters.outbound.repository.classroom
 import com.techacademy.student.adapters.outbound.mapper.classroom.toDomain
 import com.techacademy.student.domain.model.Classroom
 import com.techacademy.student.domain.repository.ClassroomRepositoryPort
+import jakarta.enterprise.context.ApplicationScoped
 
+@ApplicationScoped
 class ClassroomRepositoryAdapter(
     private val hibernateClassroomRepository: HibernateClassroomRepository
 ): ClassroomRepositoryPort {
@@ -22,7 +24,7 @@ class ClassroomRepositoryAdapter(
 
     override fun findClassroomByIdentity(year: Int, course: String, grade: Int): Classroom? {
         return hibernateClassroomRepository
-            .find("year = :year AND course = :course AND grade = :course",
+            .find("year = :year AND course = :course AND grade = :grade",
                 mapOf("year" to year, "course" to course, "grade" to grade))
             .firstResult()
             ?.toDomain()
