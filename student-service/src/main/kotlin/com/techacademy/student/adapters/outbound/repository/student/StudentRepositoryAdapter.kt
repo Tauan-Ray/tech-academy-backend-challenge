@@ -3,7 +3,9 @@ package com.techacademy.student.adapters.outbound.repository.student
 import com.techacademy.student.adapters.outbound.mapper.student.toDomain
 import com.techacademy.student.domain.model.Student
 import com.techacademy.student.domain.repository.StudentRepositoryPort
+import jakarta.enterprise.context.ApplicationScoped
 
+@ApplicationScoped
 class StudentRepositoryAdapter(
     private val hibernateStudentRepository: HibernateStudentRepository
 ): StudentRepositoryPort {
