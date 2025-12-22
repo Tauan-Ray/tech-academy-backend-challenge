@@ -8,6 +8,7 @@ fun HibernateStudentEntity.toDomain(): Student =
         id = id,
         name = name,
         email = email,
+        classroomId = classroom.id!!,
         createdAt = createdAt,
         updatedAt = updatedAt,
         deletedAt = deletedAt,
