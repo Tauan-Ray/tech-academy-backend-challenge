@@ -1,6 +1,7 @@
 package com.techacademy.student.adapters.outbound.repository.student
 
 import com.techacademy.student.adapters.outbound.mapper.student.toDomain
+import com.techacademy.student.adapters.outbound.mapper.student.toEntity
 import com.techacademy.student.domain.model.Student
 import com.techacademy.student.domain.repository.StudentRepositoryPort
 import jakarta.enterprise.context.ApplicationScoped
@@ -27,5 +28,13 @@ class StudentRepositoryAdapter(
             .find("email = ?1 and deletedAt is NULL", email)
             .firstResult()
             ?.toDomain()
+    }
+
+    override fun createStudent(student: Student): Student {
+        println(student)
+        val student = student.toEntity();
+        hibernateStudentRepository.persist(student)
+
+        return student.toDomain()
     }
 }
