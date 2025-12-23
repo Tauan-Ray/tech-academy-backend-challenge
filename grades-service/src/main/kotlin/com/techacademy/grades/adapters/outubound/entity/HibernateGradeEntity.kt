@@ -1,47 +1,37 @@
 package com.techacademy.grades.adapters.outubound.entity
 
-import com.techacademy.grades.domain.model.SubjectType
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntityBase
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
 import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.PrePersist
 import jakarta.persistence.PreUpdate
 import jakarta.persistence.Table
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "subjects")
-class HibernateSubjectEntity: PanacheEntityBase {
+@Table(name = "grades")
+class HibernateGradeEntity: PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_subject", nullable = false)
+    @Column(name = "id_grade", nullable = false)
     var id: Int? = null
 
-    @Column(name = "name", length = 50, nullable = false)
-    lateinit var name: String
+    @Column(name = "student_id", nullable = false)
+    var studentId: Int = 0
 
-    @Column(name = "grade", nullable = false)
-    var grade: Int = 0
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "subject_id", nullable = false)
+    lateinit var subject: HibernateSubjectEntity
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false, columnDefinition = "subject_type")
-    lateinit var type: SubjectType
-
-    @Column(name = "course", nullable = true, length = 50)
-    var course: String? = null
-
-    @Column(name = "workload", nullable = false)
-    var workload: Int = 0
-
-    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY)
-    var grades: List<HibernateGradeEntity> = mutableListOf()
+    @Column(name = "score", precision = 4, scale = 2, nullable = false)
+    lateinit var score: BigDecimal
 
     @Column(nullable = false, updatable = false, name = "created_at")
     lateinit var createdAt: LocalDateTime
@@ -64,4 +54,5 @@ class HibernateSubjectEntity: PanacheEntityBase {
     fun preUpdate() {
         updatedAt = LocalDateTime.now()
     }
+
 }
