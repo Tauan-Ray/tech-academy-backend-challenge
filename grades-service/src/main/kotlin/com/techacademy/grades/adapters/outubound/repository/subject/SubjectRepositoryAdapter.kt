@@ -1,4 +1,4 @@
-package com.techacademy.grades.adapters.outubound.repository
+package com.techacademy.grades.adapters.outubound.repository.subject
 
 import com.techacademy.grades.adapters.outubound.mapper.subject.toDomain
 import com.techacademy.grades.domain.model.Subject
