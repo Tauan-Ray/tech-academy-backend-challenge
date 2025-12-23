@@ -1,7 +1,9 @@
 package com.techacademy.student.adapters.outbound.repository.classroom
 
 import com.techacademy.student.adapters.outbound.mapper.classroom.toDomain
+import com.techacademy.student.adapters.outbound.mapper.student.toDomain
 import com.techacademy.student.domain.model.Classroom
+import com.techacademy.student.domain.model.Student
 import com.techacademy.student.domain.repository.ClassroomRepositoryPort
 import jakarta.enterprise.context.ApplicationScoped
 
@@ -28,5 +30,14 @@ class ClassroomRepositoryAdapter(
                 mapOf("year" to year, "course" to course, "grade" to grade))
             .firstResult()
             ?.toDomain()
+    }
+
+
+    override fun listStudentsOfClassroom(id: Int): List<Student> {
+        return hibernateClassroomRepository
+            .findById(id.toLong())
+            ?.students
+            ?.map { it.toDomain() }
+            ?: emptyList()
     }
 }

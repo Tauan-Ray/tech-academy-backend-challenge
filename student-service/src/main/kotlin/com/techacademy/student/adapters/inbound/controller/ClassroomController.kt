@@ -1,9 +1,11 @@
 package com.techacademy.student.adapters.inbound.controller
 
 import com.techacademy.student.application.dto.ClassroomDTO
+import com.techacademy.student.application.dto.StudentDTO
 import com.techacademy.student.application.usecase.classroom.FindAllClassroomsUseCase
 import com.techacademy.student.application.usecase.classroom.FindClassroomByIdentityUseCase
 import com.techacademy.student.application.usecase.classroom.FindClassroomUseCase
+import com.techacademy.student.application.usecase.classroom.ListStudentsOfClassroomUseCase
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.PathParam
@@ -16,6 +18,7 @@ class ClassroomController(
     private val findAllClassroomsUseCase: FindAllClassroomsUseCase,
     private val findClassroomUseCase: FindClassroomUseCase,
     private val findClassroomByIdentityUseCase: FindClassroomByIdentityUseCase,
+    private val listStudentsOfClassroomUseCase: ListStudentsOfClassroomUseCase
 ) {
 
     @GET
@@ -43,5 +46,13 @@ class ClassroomController(
     ): ClassroomDTO? {
         return findClassroomByIdentityUseCase
             .execute(year, course, grade)
+    }
+
+    @GET
+    @Path("/{id}/students")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun listStudentsOfClassroom(@PathParam("id") id: Int): List<StudentDTO> {
+        return listStudentsOfClassroomUseCase
+            .execute(id)
     }
 }

@@ -1,6 +1,7 @@
 package com.techacademy.student.domain.repository
 
 import com.techacademy.student.domain.model.Classroom
+import com.techacademy.student.domain.model.Student
 
 interface ClassroomRepositoryPort {
     fun findAll(): List<Classroom>
@@ -10,4 +11,5 @@ interface ClassroomRepositoryPort {
         course: String,
         grade: Int
     ): Classroom?
+    fun listStudentsOfClassroom(id: Int): List<Student>
 }
