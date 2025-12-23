@@ -24,7 +24,7 @@ class GradeRepositoryAdapter(
 
     override fun findGradeByStudent(id: Int): Grade? {
         return hibernateGradeRepository
-            .find("student_id = ?1", id)
+            .find("studentId = ?1", id)
             .firstResult()
             ?.toDomain()
     }
