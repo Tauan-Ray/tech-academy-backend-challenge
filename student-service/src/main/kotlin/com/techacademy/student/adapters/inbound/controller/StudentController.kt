@@ -53,5 +53,4 @@ class StudentController(
         return createStudentUseCase
             .execute(createStudent)
     }
-
 }

@@ -1,6 +1,7 @@
 package com.techacademy.student.adapters.outbound.repository.classroom
 
 import com.techacademy.student.adapters.outbound.mapper.classroom.toDomain
+import com.techacademy.student.adapters.outbound.mapper.classroom.toEntity
 import com.techacademy.student.adapters.outbound.mapper.student.toDomain
 import com.techacademy.student.domain.model.Classroom
 import com.techacademy.student.domain.model.Student
@@ -39,5 +40,12 @@ class ClassroomRepositoryAdapter(
             ?.students
             ?.map { it.toDomain() }
             ?: emptyList()
+    }
+
+    override fun createClassroom(classroom: Classroom): Classroom {
+        val classroom = classroom.toEntity()
+        hibernateClassroomRepository.persist(classroom)
+
+        return classroom.toDomain()
     }
 }

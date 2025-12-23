@@ -31,7 +31,6 @@ class StudentRepositoryAdapter(
     }
 
     override fun createStudent(student: Student): Student {
-        println(student)
         val student = student.toEntity();
         hibernateStudentRepository.persist(student)
 

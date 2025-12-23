@@ -1,12 +1,16 @@
 package com.techacademy.student.adapters.inbound.controller
 
 import com.techacademy.student.application.dto.ClassroomDTO
+import com.techacademy.student.application.dto.CreateClassroomDTO
 import com.techacademy.student.application.dto.StudentDTO
+import com.techacademy.student.application.usecase.classroom.CreateClassroomUseCase
 import com.techacademy.student.application.usecase.classroom.FindAllClassroomsUseCase
 import com.techacademy.student.application.usecase.classroom.FindClassroomByIdentityUseCase
 import com.techacademy.student.application.usecase.classroom.FindClassroomUseCase
 import com.techacademy.student.application.usecase.classroom.ListStudentsOfClassroomUseCase
+import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.GET
+import jakarta.ws.rs.POST
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.PathParam
 import jakarta.ws.rs.Produces
@@ -18,7 +22,8 @@ class ClassroomController(
     private val findAllClassroomsUseCase: FindAllClassroomsUseCase,
     private val findClassroomUseCase: FindClassroomUseCase,
     private val findClassroomByIdentityUseCase: FindClassroomByIdentityUseCase,
-    private val listStudentsOfClassroomUseCase: ListStudentsOfClassroomUseCase
+    private val listStudentsOfClassroomUseCase: ListStudentsOfClassroomUseCase,
+    private val createClassroomUseCase: CreateClassroomUseCase,
 ) {
 
     @GET
@@ -54,5 +59,13 @@ class ClassroomController(
     fun listStudentsOfClassroom(@PathParam("id") id: Int): List<StudentDTO> {
         return listStudentsOfClassroomUseCase
             .execute(id)
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    fun createClassroom(createClassroom: CreateClassroomDTO): ClassroomDTO {
+        return createClassroomUseCase
+            .execute(createClassroom)
     }
 }
