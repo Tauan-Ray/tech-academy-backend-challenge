@@ -7,5 +7,5 @@ interface FindClassroomByIdentityUseCase {
         year: Int?,
         course: String?,
         grade: Int?
-    ): List<ClassroomDTO?>
+    ): List<ClassroomDTO>
 }

@@ -10,7 +10,7 @@ interface ClassroomRepositoryPort {
         year: Int?,
         course: String?,
         grade: Int?
-    ): List<Classroom?>
+    ): List<Classroom>
     fun listStudentsOfClassroom(id: Int): List<Student>
     fun createClassroom(classroom: Classroom): Classroom
 }

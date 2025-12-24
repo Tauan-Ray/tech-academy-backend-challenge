@@ -25,7 +25,7 @@ class ClassroomRepositoryAdapter(
             ?.toDomain()
     }
 
-    override fun findClassroomByIdentity(year: Int?, course: String?, grade: Int?): List<Classroom?> {
+    override fun findClassroomByIdentity(year: Int?, course: String?, grade: Int?): List<Classroom> {
         return hibernateClassroomRepository
             .find(
                 """

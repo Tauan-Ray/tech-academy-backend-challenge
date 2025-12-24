@@ -11,13 +11,13 @@ import jakarta.enterprise.context.ApplicationScoped
 class FindClassroomByIdentityService(
     private val classroomRepository: ClassroomRepositoryPort
 ): FindClassroomByIdentityUseCase {
-    override fun execute(year: Int?, course: String?, grade: Int?): List<ClassroomDTO?> {
+    override fun execute(year: Int?, course: String?, grade: Int?): List<ClassroomDTO> {
         if (listOf(year, course, grade).all { it == null }) {
             throw MissingClassroomFilterException()
         }
 
         return classroomRepository
             .findClassroomByIdentity(year, course, grade)
-            .map { it?.toDTO() }
+            .map { it.toDTO() }
     }
 }

@@ -48,7 +48,7 @@ class ClassroomController(
         @QueryParam("year") year: Int?,
         @QueryParam("course") course: String?,
         @QueryParam("grade") grade: Int?
-    ): List<ClassroomDTO?> {
+    ): List<ClassroomDTO> {
         return findClassroomByIdentityUseCase
             .execute(year, course, grade)
     }
