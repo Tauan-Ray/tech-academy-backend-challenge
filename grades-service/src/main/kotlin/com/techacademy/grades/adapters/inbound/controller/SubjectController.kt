@@ -6,6 +6,7 @@ import com.techacademy.grades.application.usecase.subject.CreateSubjectUseCase
 import com.techacademy.grades.application.usecase.subject.FindAllSubjectsUseCase
 import com.techacademy.grades.application.usecase.subject.FindSubjectByNameUseCase
 import com.techacademy.grades.application.usecase.subject.FindSubjectUseCase
+import jakarta.validation.Valid
 import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.POST
@@ -48,7 +49,7 @@ class SubjectController(
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    fun createUser(createSubject: CreateSubjectDTO): SubjectDTO {
+    fun createUser(@Valid createSubject: CreateSubjectDTO): SubjectDTO {
         return createSubjectUseCase
             .execute(createSubject)
     }

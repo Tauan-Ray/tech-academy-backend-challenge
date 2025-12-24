@@ -6,6 +6,7 @@ import com.techacademy.grades.application.mapper.subject.toDTO
 import com.techacademy.grades.application.mapper.subject.toDomain
 import com.techacademy.grades.application.service.exception.SubjectAlreadyExistsException
 import com.techacademy.grades.application.usecase.subject.CreateSubjectUseCase
+import com.techacademy.grades.application.util.validateCourseByType
 import com.techacademy.grades.domain.repository.SubjectRepositoryPort
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.transaction.Transactional
@@ -19,8 +20,9 @@ class CreateSubjectService(
     @Transactional
     override fun execute(createSubject: CreateSubjectDTO): SubjectDTO {
         val existingSubject = subjectRepository.findSubjectByName(createSubject.name)
-
         if (existingSubject != null) throw SubjectAlreadyExistsException()
+
+        validateCourseByType(createSubject)
 
         val newSubject = createSubject.toDomain()
         val now = LocalDateTime.now()
