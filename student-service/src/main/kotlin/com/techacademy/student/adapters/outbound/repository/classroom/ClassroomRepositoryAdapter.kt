@@ -25,12 +25,22 @@ class ClassroomRepositoryAdapter(
             ?.toDomain()
     }
 
-    override fun findClassroomByIdentity(year: Int, course: String, grade: Int): Classroom? {
+    override fun findClassroomByIdentity(year: Int?, course: String?, grade: Int?): List<Classroom?> {
         return hibernateClassroomRepository
-            .find("year = :year AND course = :course AND grade = :grade",
-                mapOf("year" to year, "course" to course, "grade" to grade))
-            .firstResult()
-            ?.toDomain()
+            .find(
+                """
+                    (:year IS NULL OR year = :year)
+                    AND (:course IS NULL OR course = :course)
+                    AND (:grade IS NULL OR grade = :grade)
+                """.trimIndent(),
+                mapOf(
+                    "year" to year,
+                    "course" to course,
+                    "grade" to grade
+                )
+            )
+            .list()
+            .map { it.toDomain() }
     }
 
 

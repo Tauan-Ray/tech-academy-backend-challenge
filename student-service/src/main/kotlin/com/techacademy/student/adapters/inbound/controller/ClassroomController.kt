@@ -45,10 +45,10 @@ class ClassroomController(
     @Path("/search")
     @Produces(MediaType.APPLICATION_JSON)
     fun findClassroomByIdentity(
-        @QueryParam("year") year: Int,
-        @QueryParam("course") course: String,
-        @QueryParam("grade") grade: Int
-    ): ClassroomDTO? {
+        @QueryParam("year") year: Int?,
+        @QueryParam("course") course: String?,
+        @QueryParam("grade") grade: Int?
+    ): List<ClassroomDTO?> {
         return findClassroomByIdentityUseCase
             .execute(year, course, grade)
     }

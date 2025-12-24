@@ -7,10 +7,10 @@ interface ClassroomRepositoryPort {
     fun findAll(): List<Classroom>
     fun findClassroom(id: Int): Classroom?
     fun findClassroomByIdentity(
-        year: Int,
-        course: String,
-        grade: Int
-    ): Classroom?
+        year: Int?,
+        course: String?,
+        grade: Int?
+    ): List<Classroom?>
     fun listStudentsOfClassroom(id: Int): List<Student>
     fun createClassroom(classroom: Classroom): Classroom
 }

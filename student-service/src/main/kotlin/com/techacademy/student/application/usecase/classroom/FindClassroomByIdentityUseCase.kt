@@ -4,8 +4,8 @@ import com.techacademy.student.application.dto.ClassroomDTO
 
 interface FindClassroomByIdentityUseCase {
     fun execute(
-        year: Int,
-        course: String,
-        grade: Int
-    ): ClassroomDTO?
+        year: Int?,
+        course: String?,
+        grade: Int?
+    ): List<ClassroomDTO?>
 }
