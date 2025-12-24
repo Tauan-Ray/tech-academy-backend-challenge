@@ -1,6 +1,7 @@
 package com.techacademy.grades.adapters.outubound.repository.subject
 
 import com.techacademy.grades.adapters.outubound.mapper.subject.toDomain
+import com.techacademy.grades.adapters.outubound.mapper.subject.toEntity
 import com.techacademy.grades.domain.model.Subject
 import com.techacademy.grades.domain.repository.SubjectRepositoryPort
 import jakarta.enterprise.context.ApplicationScoped
@@ -28,5 +29,12 @@ class SubjectRepositoryAdapter(
             .find("name = ?1", name)
             .firstResult()
             ?.toDomain()
+    }
+
+    override fun createSubject(subject: Subject): Subject {
+        val entity = subject.toEntity()
+        hibernateSubjectRepository.persist(entity)
+
+        return entity.toDomain()
     }
 }
