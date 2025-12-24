@@ -31,7 +31,7 @@ class HibernateSubjectEntity: PanacheEntityBase {
     var grade: Int = 0
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false, columnDefinition = "subject_type")
+    @Column(name = "type", nullable = false, length = 25)
     lateinit var type: SubjectType
 
     @Column(name = "course", nullable = true, length = 50)
