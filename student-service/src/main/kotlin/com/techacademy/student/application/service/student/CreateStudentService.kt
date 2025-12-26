@@ -4,8 +4,10 @@ import com.techacademy.student.application.dto.CreateStudentDTO
 import com.techacademy.student.application.dto.StudentDTO
 import com.techacademy.student.application.mapper.student.toDTO
 import com.techacademy.student.application.mapper.student.toDomain
+import com.techacademy.student.application.service.exception.ClassroomNotExistsException
 import com.techacademy.student.application.service.exception.EmailAlreadyExistsException
 import com.techacademy.student.application.usecase.student.CreateStudentUseCase
+import com.techacademy.student.domain.repository.ClassroomRepositoryPort
 import com.techacademy.student.domain.repository.StudentRepositoryPort
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.transaction.Transactional
@@ -13,7 +15,8 @@ import java.time.LocalDateTime
 
 @ApplicationScoped
 class CreateStudentService(
-    private val studentRepository: StudentRepositoryPort
+    private val studentRepository: StudentRepositoryPort,
+    private val classroomRepository: ClassroomRepositoryPort
 ): CreateStudentUseCase {
 
     @Transactional
@@ -21,6 +24,8 @@ class CreateStudentService(
         val existingEmail = studentRepository.findStudentByEmail(createStudent.email)
 
         if (existingEmail != null) throw EmailAlreadyExistsException()
+
+        classroomRepository.findClassroom(createStudent.classroomId) ?: throw ClassroomNotExistsException()
 
         val student = createStudent.toDomain()
         val now = LocalDateTime.now()
