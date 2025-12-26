@@ -4,9 +4,11 @@ import com.techacademy.grades.application.dto.CreateGradeDTO
 import com.techacademy.grades.application.dto.GradeDTO
 import com.techacademy.grades.application.mapper.grade.toDTO
 import com.techacademy.grades.application.mapper.grade.toDomain
+import com.techacademy.grades.application.service.exception.GradeAlreadyExistsException
 import com.techacademy.grades.application.service.exception.StudentNotExistsException
 import com.techacademy.grades.application.service.exception.SubjectNotExistsException
 import com.techacademy.grades.application.usecase.grade.CreateGradeUseCase
+import com.techacademy.grades.domain.model.Bimester
 import com.techacademy.grades.domain.port.StudentLookupPort
 import com.techacademy.grades.domain.repository.GradeRepositoryPort
 import com.techacademy.grades.domain.repository.SubjectRepositoryPort
@@ -31,6 +33,15 @@ class CreateGradeService(
         subjectRepository
             .findSubject(createGrade.subjectId)
             ?: throw SubjectNotExistsException()
+
+        val existingGrade = gradeRepository
+            .findExistingGrades(
+                createGrade.studentId,
+                createGrade.subjectId,
+                Bimester.valueOf(createGrade.bimester
+            ))
+
+        if (existingGrade.isNotEmpty()) throw GradeAlreadyExistsException()
 
         val newGrade = createGrade.toDomain()
         val now = LocalDateTime.now()
