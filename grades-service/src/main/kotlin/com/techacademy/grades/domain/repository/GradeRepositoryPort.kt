@@ -7,4 +7,5 @@ interface GradeRepositoryPort {
     fun findAll(): List<Grade>
     fun findGrade(id: Int): Grade?
     fun findGradeByStudent(id: Int): Grade?
+    fun createGrade(grade: Grade): Grade
 }

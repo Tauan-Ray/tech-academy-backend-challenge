@@ -24,8 +24,9 @@ class CreateSubjectService(
     override fun execute(createSubject: CreateSubjectDTO): SubjectDTO {
         validateCourseByType(createSubject)
 
-        val existingSubject = subjectRepository.findSubjectByName(createSubject.name)
-        if (existingSubject != null) throw SubjectAlreadyExistsException()
+        subjectRepository
+            .findSubjectByName(createSubject.name)
+            ?: throw SubjectAlreadyExistsException()
 
         val existingClassroom = classroomLookupPort
             .existsByIdentity(createSubject.course, createSubject.grade)
