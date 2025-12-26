@@ -24,7 +24,7 @@ class CreateClassroomService(
             createClassroom.grade,
         )
 
-        if (existingCourse != null) throw ClassroomAlreadyExistsException()
+        if (existingCourse.isNotEmpty()) throw ClassroomAlreadyExistsException()
 
         val classroom = createClassroom.toDomain()
         val now = LocalDateTime.now()
