@@ -4,6 +4,7 @@ import com.techacademy.grades.adapters.outubound.mapper.grade.toDomain
 import com.techacademy.grades.adapters.outubound.mapper.grade.toEntity
 import com.techacademy.grades.adapters.outubound.repository.subject.HibernateSubjectRepository
 import com.techacademy.grades.application.service.exception.SubjectNotExistsException
+import com.techacademy.grades.domain.model.Bimester
 import com.techacademy.grades.domain.model.Grade
 import com.techacademy.grades.domain.repository.GradeRepositoryPort
 import jakarta.enterprise.context.ApplicationScoped
@@ -29,6 +30,24 @@ class GradeRepositoryAdapter(
     override fun findGradeByStudent(id: Int): List<Grade> {
         return hibernateGradeRepository
             .find("studentId = ?1 and deletedAt IS NULL", id)
+            .list()
+            .map { it.toDomain() }
+    }
+
+    override fun findExistingGrades(studentId: Int?, subjectId: Int?, bimester: Bimester?): List<Grade> {
+        return hibernateGradeRepository
+            .find(
+                """
+                    (:studentId IS NULL OR studentId = :studentId)
+                    AND (:subjectId IS NULL OR subject.id = :subjectId)
+                    AND (:bimester IS NULL OR bimester = :bimester)
+                """.trimIndent(),
+                mapOf(
+                    "studentId" to studentId,
+                    "subjectId" to subjectId,
+                    "bimester" to bimester
+                )
+            )
             .list()
             .map { it.toDomain() }
     }
