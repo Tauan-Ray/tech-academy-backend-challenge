@@ -42,7 +42,7 @@ class GradeController(
     @GET
     @Path("/student/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    fun findStudentByEmail(@PathParam("id") id: Int): GradeDTO? {
+    fun findStudentByEmail(@PathParam("id") id: Int): List<GradeDTO> {
         return findGradeByStudentUseCase
             .execute(id)
     }

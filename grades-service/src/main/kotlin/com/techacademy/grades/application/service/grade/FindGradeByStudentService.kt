@@ -14,12 +14,12 @@ class FindGradeByStudentService(
     private val studentLookupPort: StudentLookupPort,
 ): FindGradeByStudentUseCase {
 
-    override fun execute(id: Int): GradeDTO? {
+    override fun execute(id: Int): List<GradeDTO> {
         val existsStudent = studentLookupPort.existsById(id)
         if (!existsStudent) throw StudentNotExistsException()
 
         return gradeRepository
             .findGradeByStudent(id)
-            ?.toDTO()
+            .map { it.toDTO() }
     }
 }

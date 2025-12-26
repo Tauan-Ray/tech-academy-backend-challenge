@@ -26,11 +26,11 @@ class GradeRepositoryAdapter(
             ?.toDomain()
     }
 
-    override fun findGradeByStudent(id: Int): Grade? {
+    override fun findGradeByStudent(id: Int): List<Grade> {
         return hibernateGradeRepository
-            .find("studentId = ?1", id)
-            .firstResult()
-            ?.toDomain()
+            .find("studentId = ?1 and deletedAt IS NULL", id)
+            .list()
+            .map { it.toDomain() }
     }
 
     override fun createGrade(grade: Grade): Grade {
