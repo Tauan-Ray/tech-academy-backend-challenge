@@ -9,6 +9,7 @@ fun HibernateGradeEntity.toDomain(): Grade =
         studentId = studentId,
         subjectId = subject.id!!,
         score = score,
+        bimester = bimester,
         createdAt = createdAt,
         updatedAt = updatedAt,
         deletedAt = deletedAt,

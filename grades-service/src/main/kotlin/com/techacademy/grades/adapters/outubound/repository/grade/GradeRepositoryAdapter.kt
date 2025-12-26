@@ -38,6 +38,7 @@ class GradeRepositoryAdapter(
             .findById(grade.subjectId.toLong())
             ?: throw SubjectNotExistsException()
 
+        println(grade)
         val entity = grade.toEntity(subject)
         hibernateGradeRepository.persist(entity)
 

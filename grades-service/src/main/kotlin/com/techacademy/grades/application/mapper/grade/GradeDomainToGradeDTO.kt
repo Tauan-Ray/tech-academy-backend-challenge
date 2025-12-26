@@ -9,5 +9,6 @@ fun Grade.toDTO(): GradeDTO =
         studentId = studentId,
         subjectId = subjectId,
         score = score,
+        bimester = bimester,
         createdAt = createdAt,
     )
