@@ -4,7 +4,9 @@ import com.techacademy.student.application.dto.EnrollmentDTO
 import com.techacademy.student.application.mapper.enrollment.toDTO
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByClassroomUseCase
 import com.techacademy.student.domain.repository.EnrollmentRepositoryPort
+import jakarta.enterprise.context.ApplicationScoped
 
+@ApplicationScoped
 class FindEnrollmentByClassroomService(
     private val enrollmentRepository: EnrollmentRepositoryPort
 ): FindEnrollmentByClassroomUseCase {
