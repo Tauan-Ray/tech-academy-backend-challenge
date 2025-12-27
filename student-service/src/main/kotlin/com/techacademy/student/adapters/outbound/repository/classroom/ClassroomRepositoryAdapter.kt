@@ -3,6 +3,7 @@ package com.techacademy.student.adapters.outbound.repository.classroom
 import com.techacademy.student.adapters.outbound.mapper.classroom.toDomain
 import com.techacademy.student.adapters.outbound.mapper.classroom.toEntity
 import com.techacademy.student.adapters.outbound.mapper.student.toDomain
+import com.techacademy.student.adapters.outbound.repository.enrollment.HibernateEnrollmentRepository
 import com.techacademy.student.domain.model.Classroom
 import com.techacademy.student.domain.model.Student
 import com.techacademy.student.domain.repository.ClassroomRepositoryPort
@@ -10,7 +11,8 @@ import jakarta.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class ClassroomRepositoryAdapter(
-    private val hibernateClassroomRepository: HibernateClassroomRepository
+    private val hibernateClassroomRepository: HibernateClassroomRepository,
+    private val hibernateEnrollmentRepository: HibernateEnrollmentRepository
 ): ClassroomRepositoryPort {
     override fun findAll(): List<Classroom> {
         return hibernateClassroomRepository
@@ -45,12 +47,12 @@ class ClassroomRepositoryAdapter(
 
 
     override fun listStudentsOfClassroom(id: Int): List<Student> {
-        TODO("Adaptar para novo formato com Enrollment")
-//        return hibernateClassroomRepository
-//            .findById(id.toLong())
-//            ?.students
-//            ?.map { it.toDomain() }
-//            ?: emptyList()
+        val enrollments = hibernateEnrollmentRepository
+            .find("classroom.id = ?1 AND deletedAt IS NULL", id)
+            .list()
+            .map { it.student }
+
+        return enrollments.map { it.toDomain() }
     }
 
     override fun createClassroom(classroom: Classroom): Classroom {
