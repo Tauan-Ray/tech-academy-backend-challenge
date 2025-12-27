@@ -1,6 +1,7 @@
 package com.techacademy.student.adapters.outbound.repository.enrollment
 
 import com.techacademy.student.adapters.outbound.mapper.enrollment.toDomain
+import com.techacademy.student.adapters.outbound.mapper.enrollment.toEntity
 import com.techacademy.student.domain.model.Enrollment
 import com.techacademy.student.domain.repository.EnrollmentRepositoryPort
 import jakarta.enterprise.context.ApplicationScoped
@@ -34,5 +35,12 @@ class EnrollmentRepositoryAdapter(
             .find("classroom.id = ?1 AND deletedAt IS NULL", classroomId)
             .list()
             .map { it.toDomain() }
+    }
+
+    override fun createEnrollment(enrollment: Enrollment): Enrollment {
+        val entity = enrollment.toEntity()
+        hibernateEnrollmentRepository.persist(entity)
+
+        return entity.toDomain()
     }
 }

@@ -1,11 +1,15 @@
 package com.techacademy.student.adapters.inbound.controller
 
+import com.techacademy.student.application.dto.CreateEnrollmentDTO
 import com.techacademy.student.application.dto.EnrollmentDTO
+import com.techacademy.student.application.usecase.enrollment.CreateEnrollmentUseCase
 import com.techacademy.student.application.usecase.enrollment.FindAllEnrollmentsUseCase
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByClassroomUseCase
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByIdUseCase
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByStudentUseCase
+import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.GET
+import jakarta.ws.rs.POST
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.PathParam
 import jakarta.ws.rs.Produces
@@ -16,7 +20,8 @@ class EnrollmentController(
     private val findAllEnrollmentsUseCase: FindAllEnrollmentsUseCase,
     private val findEnrollmentByIdUseCase: FindEnrollmentByIdUseCase,
     private val findEnrollmentByStudentUseCase: FindEnrollmentByStudentUseCase,
-    private val findEnrollmentByClassroomUseCase: FindEnrollmentByClassroomUseCase
+    private val findEnrollmentByClassroomUseCase: FindEnrollmentByClassroomUseCase,
+    private val createEnrollmentUseCase: CreateEnrollmentUseCase,
 ) {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -47,5 +52,13 @@ class EnrollmentController(
     fun findEnrollmentByClassroom(@PathParam("classroomId") classroomId: Int): List<EnrollmentDTO> {
         return findEnrollmentByClassroomUseCase
             .execute(classroomId)
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    fun createClassroom(createEnrollment: CreateEnrollmentDTO): EnrollmentDTO {
+        return createEnrollmentUseCase
+            .execute(createEnrollment)
     }
 }
