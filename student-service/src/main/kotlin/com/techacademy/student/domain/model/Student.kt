@@ -6,7 +6,6 @@ data class Student(
     val id: Int? = null,
     var name: String,
     var email: String,
-    var classroomId: Int,
     var createdAt: LocalDateTime? = null,
     var updatedAt: LocalDateTime? = null,
     var deletedAt: LocalDateTime? = null,

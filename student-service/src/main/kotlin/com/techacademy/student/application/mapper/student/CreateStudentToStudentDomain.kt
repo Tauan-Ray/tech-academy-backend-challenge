@@ -7,5 +7,4 @@ fun CreateStudentDTO.toDomain(): Student =
     Student(
         name = name,
         email = email,
-        classroomId = classroomId,
     )

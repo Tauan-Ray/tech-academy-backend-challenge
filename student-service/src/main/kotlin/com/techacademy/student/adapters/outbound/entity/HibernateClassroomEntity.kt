@@ -29,9 +29,6 @@ class HibernateClassroomEntity {
     @Column(name = "grade", nullable = false)
     var grade: Int = 0
 
-    @OneToMany(mappedBy = "classroom", fetch = FetchType.LAZY)
-    var students: List<HibernateStudentEntity> = mutableListOf()
-
     @Column(nullable = false, updatable = false, name = "created_at")
     lateinit var createdAt: LocalDateTime
 

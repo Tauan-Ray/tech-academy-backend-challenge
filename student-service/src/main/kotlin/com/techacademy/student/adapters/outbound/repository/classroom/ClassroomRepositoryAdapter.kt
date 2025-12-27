@@ -45,11 +45,12 @@ class ClassroomRepositoryAdapter(
 
 
     override fun listStudentsOfClassroom(id: Int): List<Student> {
-        return hibernateClassroomRepository
-            .findById(id.toLong())
-            ?.students
-            ?.map { it.toDomain() }
-            ?: emptyList()
+        TODO("Adaptar para novo formato com Enrollment")
+//        return hibernateClassroomRepository
+//            .findById(id.toLong())
+//            ?.students
+//            ?.map { it.toDomain() }
+//            ?: emptyList()
     }
 
     override fun createClassroom(classroom: Classroom): Classroom {

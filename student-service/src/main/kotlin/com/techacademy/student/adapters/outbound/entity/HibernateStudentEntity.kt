@@ -29,10 +29,6 @@ class HibernateStudentEntity: PanacheEntityBase {
     @Column(name = "email", nullable = false, unique = true, length = 255)
     lateinit var email: String
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "classroom_id", nullable = false)
-    lateinit var classroom: HibernateClassroomEntity
-
     @Column(nullable = false, updatable = false, name = "created_at")
     lateinit var createdAt: LocalDateTime
 

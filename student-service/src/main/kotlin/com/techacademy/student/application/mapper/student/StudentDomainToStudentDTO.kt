@@ -8,6 +8,5 @@ fun Student.toDTO(): StudentDTO =
         id = id,
         name = name,
         email = email,
-        classroomId = classroomId,
         createdAt = createdAt
     )

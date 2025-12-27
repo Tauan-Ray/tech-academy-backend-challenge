@@ -34,11 +34,7 @@ class StudentRepositoryAdapter(
     }
 
     override fun createStudent(student: Student): Student {
-        val classroom = hibernateClassroomRepository
-            .findById(student.classroomId.toLong())
-            ?: throw ClassroomNotExistsException()
-
-        val student = student.toEntity(classroom);
+        val student = student.toEntity();
         hibernateStudentRepository.persist(student)
 
         return student.toDomain()
