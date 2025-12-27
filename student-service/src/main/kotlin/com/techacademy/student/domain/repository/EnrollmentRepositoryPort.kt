@@ -8,4 +8,8 @@ interface EnrollmentRepositoryPort {
     fun findByStudent(studentId: Int): List<Enrollment>
     fun findByClassroom(classroomId: Int): List<Enrollment>
     fun createEnrollment(enrollment: Enrollment): Enrollment
+    fun existsByStudentAndClassroom(
+        studentId: Int,
+        classroomId: Int
+    ): Boolean
 }

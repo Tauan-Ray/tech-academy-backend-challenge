@@ -37,6 +37,12 @@ class EnrollmentRepositoryAdapter(
             .map { it.toDomain() }
     }
 
+    override fun existsByStudentAndClassroom(studentId: Int, classroomId: Int): Boolean {
+        return hibernateEnrollmentRepository
+            .find("classroom.id = ?1 AND student.id = ?2", classroomId, studentId)
+            .count() > 0
+    }
+
     override fun createEnrollment(enrollment: Enrollment): Enrollment {
         val entity = enrollment.toEntity()
         hibernateEnrollmentRepository.persist(entity)
