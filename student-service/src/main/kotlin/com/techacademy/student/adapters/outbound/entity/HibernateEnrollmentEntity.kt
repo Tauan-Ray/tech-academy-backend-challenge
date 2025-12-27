@@ -18,7 +18,7 @@ import java.time.LocalDateTime
 class HibernateEnrollmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_enrollments", nullable = false)
+    @Column(name = "id_enrollment", nullable = false)
     var id: Int? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
