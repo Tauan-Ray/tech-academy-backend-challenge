@@ -1,0 +1,51 @@
+package com.techacademy.student.adapters.inbound.controller
+
+import com.techacademy.student.application.dto.EnrollmentDTO
+import com.techacademy.student.application.usecase.enrollment.FindAllEnrollmentsUseCase
+import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByClassroomUseCase
+import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByIdUseCase
+import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByStudentUseCase
+import jakarta.ws.rs.GET
+import jakarta.ws.rs.Path
+import jakarta.ws.rs.PathParam
+import jakarta.ws.rs.Produces
+import jakarta.ws.rs.core.MediaType
+
+@Path("/enrollments")
+class EnrollmentController(
+    private val findAllEnrollmentsUseCase: FindAllEnrollmentsUseCase,
+    private val findEnrollmentByIdUseCase: FindEnrollmentByIdUseCase,
+    private val findEnrollmentByStudentUseCase: FindEnrollmentByStudentUseCase,
+    private val findEnrollmentByClassroomUseCase: FindEnrollmentByClassroomUseCase
+) {
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    fun findAll(): List<EnrollmentDTO> {
+        return findAllEnrollmentsUseCase
+            .execute()
+    }
+
+    @GET
+    @Path("/{enrollmentId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun findEnrollmentById(@PathParam("enrollmentId") enrollmentId: Int): EnrollmentDTO? {
+        return findEnrollmentByIdUseCase
+            .execute(enrollmentId)
+    }
+
+    @GET
+    @Path("/student/{studentId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun findEnrollmentByStudent(@PathParam("studentId") studentId: Int): List<EnrollmentDTO> {
+        return findEnrollmentByStudentUseCase
+            .execute(studentId)
+    }
+
+    @GET
+    @Path("/classroom/{classroomId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun findEnrollmentByClassroom(@PathParam("classroomId") classroomId: Int): List<EnrollmentDTO> {
+        return findEnrollmentByClassroomUseCase
+            .execute(classroomId)
+    }
+}
