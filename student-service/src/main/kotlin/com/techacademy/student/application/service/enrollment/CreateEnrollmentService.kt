@@ -5,6 +5,7 @@ import com.techacademy.student.application.dto.EnrollmentDTO
 import com.techacademy.student.application.mapper.enrollment.toDTO
 import com.techacademy.student.application.mapper.enrollment.toDomain
 import com.techacademy.student.application.service.exception.ClassroomNotExistsException
+import com.techacademy.student.application.service.exception.EnrollmentAlreadyExistsException
 import com.techacademy.student.application.service.exception.StudentNotExistsException
 import com.techacademy.student.application.usecase.enrollment.CreateEnrollmentUseCase
 import com.techacademy.student.domain.repository.ClassroomRepositoryPort
@@ -30,6 +31,14 @@ class CreateEnrollmentService(
         classroomRepository
             .findClassroom(createEnrollment.classroomId)
             ?: throw ClassroomNotExistsException()
+
+        val existsEnrollment = enrollmentRepository
+            .existsByStudentAndClassroom(
+                createEnrollment.studentId,
+                createEnrollment.classroomId,
+            )
+
+        if (existsEnrollment) throw EnrollmentAlreadyExistsException()
 
         val enrollment = createEnrollment.toDomain()
         val now = LocalDateTime.now()
