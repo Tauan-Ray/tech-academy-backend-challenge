@@ -4,6 +4,7 @@ import com.techacademy.grades.application.dto.GradeDTO
 import com.techacademy.grades.application.mapper.grade.toDTO
 import com.techacademy.grades.application.service.exception.StudentNotExistsException
 import com.techacademy.grades.application.usecase.grade.FindGradeByStudentUseCase
+import com.techacademy.grades.domain.port.EnrollmentLookupPort
 import com.techacademy.grades.domain.port.StudentLookupPort
 import com.techacademy.grades.domain.repository.GradeRepositoryPort
 import jakarta.enterprise.context.ApplicationScoped
@@ -12,14 +13,18 @@ import jakarta.enterprise.context.ApplicationScoped
 class FindGradeByStudentService(
     private val gradeRepository: GradeRepositoryPort,
     private val studentLookupPort: StudentLookupPort,
+    private val enrollmentLookupPort: EnrollmentLookupPort
 ): FindGradeByStudentUseCase {
 
     override fun execute(id: Int): List<GradeDTO> {
         val existsStudent = studentLookupPort.existsById(id)
         if (!existsStudent) throw StudentNotExistsException()
 
+        val enrollmentIds =  enrollmentLookupPort.findEnrollmentsByStudent(id)
+        if (enrollmentIds.isEmpty()) return emptyList();
+
         return gradeRepository
-            .findGradeByStudent(id)
+            .findGradeByEnrollmentIds(enrollmentIds)
             .map { it.toDTO() }
     }
 }

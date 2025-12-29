@@ -27,9 +27,9 @@ class GradeRepositoryAdapter(
             ?.toDomain()
     }
 
-    override fun findGradeByStudent(id: Int): List<Grade> {
+    override fun findGradeByEnrollmentIds(enrollmentIds: List<Int>): List<Grade> {
         return hibernateGradeRepository
-            .find("studentId = ?1 and deletedAt IS NULL", id)
+            .find("enrollmentId IN ?1 and deletedAt IS NULL", enrollmentIds)
             .list()
             .map { it.toDomain() }
     }
@@ -57,7 +57,6 @@ class GradeRepositoryAdapter(
             .findById(grade.subjectId.toLong())
             ?: throw SubjectNotExistsException()
 
-        println(grade)
         val entity = grade.toEntity(subject)
         hibernateGradeRepository.persist(entity)
 

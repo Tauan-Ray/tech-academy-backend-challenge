@@ -10,6 +10,7 @@ fun Grade.toEntity(subject: HibernateSubjectEntity): HibernateGradeEntity =
         enrollmentId = this@toEntity.enrollmentId
         this.subject = subject
         score = this@toEntity.score
+        bimester = this@toEntity.bimester
 
         createdAt = requireNotNull(this@toEntity.createdAt)
         updatedAt = requireNotNull(this@toEntity.updatedAt)

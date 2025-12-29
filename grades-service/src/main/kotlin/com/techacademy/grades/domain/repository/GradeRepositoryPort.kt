@@ -7,7 +7,7 @@ import com.techacademy.grades.domain.model.Grade
 interface GradeRepositoryPort {
     fun findAll(): List<Grade>
     fun findGrade(id: Int): Grade?
-    fun findGradeByStudent(id: Int): List<Grade>
+    fun findGradeByEnrollmentIds(enrollmentIds: List<Int>): List<Grade>
     fun findExistingGrades(
         enrollmentId: Int?,
         subjectId: Int?,
