@@ -6,6 +6,7 @@ import com.techacademy.student.application.usecase.student.CreateStudentUseCase
 import com.techacademy.student.application.usecase.student.FindAllStudentsUseCase
 import com.techacademy.student.application.usecase.student.FindStudentByEmailUseCase
 import com.techacademy.student.application.usecase.student.FindStudentUseCase
+import jakarta.validation.Valid
 import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.POST
@@ -49,7 +50,7 @@ class StudentController(
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    fun createUser(createStudent: CreateStudentDTO): StudentDTO {
+    fun createUser(@Valid createStudent: CreateStudentDTO): StudentDTO {
         return createStudentUseCase
             .execute(createStudent)
     }

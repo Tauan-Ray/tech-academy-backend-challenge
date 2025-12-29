@@ -8,6 +8,7 @@ import com.techacademy.student.application.usecase.enrollment.FindAllEnrollments
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByClassroomUseCase
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByIdUseCase
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByStudentUseCase
+import jakarta.validation.Valid
 import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.POST
@@ -70,7 +71,7 @@ class EnrollmentController(
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    fun createClassroom(createEnrollment: CreateEnrollmentDTO): EnrollmentDTO {
+    fun createClassroom(@Valid createEnrollment: CreateEnrollmentDTO): EnrollmentDTO {
         return createEnrollmentUseCase
             .execute(createEnrollment)
     }

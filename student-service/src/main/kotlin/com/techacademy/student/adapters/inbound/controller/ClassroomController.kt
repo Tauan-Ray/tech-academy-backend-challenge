@@ -8,6 +8,7 @@ import com.techacademy.student.application.usecase.classroom.FindAllClassroomsUs
 import com.techacademy.student.application.usecase.classroom.FindClassroomByIdentityUseCase
 import com.techacademy.student.application.usecase.classroom.FindClassroomUseCase
 import com.techacademy.student.application.usecase.classroom.ListStudentsOfClassroomUseCase
+import jakarta.validation.Valid
 import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.POST
@@ -64,7 +65,7 @@ class ClassroomController(
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    fun createClassroom(createClassroom: CreateClassroomDTO): ClassroomDTO {
+    fun createClassroom(@Valid createClassroom: CreateClassroomDTO): ClassroomDTO {
         return createClassroomUseCase
             .execute(createClassroom)
     }
