@@ -6,7 +6,7 @@ import com.techacademy.grades.domain.model.Grade
 
 fun CreateGradeDTO.toDomain(): Grade =
     Grade(
-        studentId = studentId,
+        enrollmentId = enrollmentId,
         subjectId = subjectId,
         bimester = Bimester.valueOf(bimester),
         score = score,

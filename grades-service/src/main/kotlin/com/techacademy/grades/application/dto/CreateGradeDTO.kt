@@ -7,8 +7,8 @@ import jakarta.validation.constraints.Pattern
 import java.math.BigDecimal
 
 data class CreateGradeDTO(
-    @field:Min(value = 1, message = "O id do estudante é obrigatório")
-    val studentId: Int,
+    @field:Min(value = 1, message = "O id da matrícula é obrigatória")
+    val enrollmentId: Int,
 
     @field:Min(value = 1, message = "O id da disciplina é obrigatório")
     val subjectId: Int,

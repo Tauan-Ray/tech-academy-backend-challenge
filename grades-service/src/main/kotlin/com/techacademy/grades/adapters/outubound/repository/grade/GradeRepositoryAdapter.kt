@@ -34,16 +34,16 @@ class GradeRepositoryAdapter(
             .map { it.toDomain() }
     }
 
-    override fun findExistingGrades(studentId: Int?, subjectId: Int?, bimester: Bimester?): List<Grade> {
+    override fun findExistingGrades(enrollmentId: Int?, subjectId: Int?, bimester: Bimester?): List<Grade> {
         return hibernateGradeRepository
             .find(
                 """
-                    (:studentId IS NULL OR studentId = :studentId)
+                    (:enrollmentId IS NULL OR enrollmentId = :enrollmentId)
                     AND (:subjectId IS NULL OR subject.id = :subjectId)
                     AND (:bimester IS NULL OR bimester = :bimester)
                 """.trimIndent(),
                 mapOf(
-                    "studentId" to studentId,
+                    "enrollmentId" to enrollmentId,
                     "subjectId" to subjectId,
                     "bimester" to bimester
                 )

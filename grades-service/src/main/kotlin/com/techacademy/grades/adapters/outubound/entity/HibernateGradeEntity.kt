@@ -26,8 +26,8 @@ class HibernateGradeEntity: PanacheEntityBase {
     @Column(name = "id_grade", nullable = false)
     var id: Int? = null
 
-    @Column(name = "student_id", nullable = false)
-    var studentId: Int = 0
+    @Column(name = "enrollment_id", nullable = false)
+    var enrollmentId: Int = 0
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id", nullable = false)

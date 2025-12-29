@@ -12,7 +12,7 @@ enum class Bimester {
 
 data class Grade(
     val id: Int? = null,
-    val studentId: Int,
+    val enrollmentId: Int,
     val subjectId: Int,
     val bimester: Bimester,
     val score: BigDecimal,

@@ -9,7 +9,7 @@ interface GradeRepositoryPort {
     fun findGrade(id: Int): Grade?
     fun findGradeByStudent(id: Int): List<Grade>
     fun findExistingGrades(
-        studentId: Int?,
+        enrollmentId: Int?,
         subjectId: Int?,
         bimester: Bimester?,
     ): List<Grade>

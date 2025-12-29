@@ -7,7 +7,7 @@ import com.techacademy.grades.domain.model.Grade
 fun Grade.toEntity(subject: HibernateSubjectEntity): HibernateGradeEntity =
     HibernateGradeEntity().apply {
         id = this@toEntity.id
-        studentId = this@toEntity.studentId
+        enrollmentId = this@toEntity.enrollmentId
         this.subject = subject
         score = this@toEntity.score
 

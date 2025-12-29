@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 data class GradeDTO(
     val id: Int? = null,
-    val studentId: Int,
+    val enrollmentId: Int,
     val subjectId: Int,
     val score: BigDecimal,
     val bimester: Bimester,

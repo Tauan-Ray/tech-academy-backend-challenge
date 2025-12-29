@@ -6,7 +6,7 @@ import com.techacademy.grades.domain.model.Grade
 fun HibernateGradeEntity.toDomain(): Grade =
     Grade(
         id = id,
-        studentId = studentId,
+        enrollmentId = enrollmentId,
         subjectId = subject.id!!,
         score = score,
         bimester = bimester,
