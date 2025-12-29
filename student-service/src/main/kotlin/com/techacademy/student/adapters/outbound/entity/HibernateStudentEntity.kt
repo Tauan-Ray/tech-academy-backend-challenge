@@ -26,7 +26,7 @@ class HibernateStudentEntity: PanacheEntityBase {
     @Column(name = "name", nullable = false, length = 60)
     lateinit var name: String
 
-    @Column(name = "email", nullable = false, unique = true, length = 255)
+    @Column(name = "email", nullable = false, length = 255)
     lateinit var email: String
 
     @Column(nullable = false, updatable = false, name = "created_at")
