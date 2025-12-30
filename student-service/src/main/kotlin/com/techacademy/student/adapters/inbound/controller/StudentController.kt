@@ -8,6 +8,7 @@ import com.techacademy.student.application.usecase.student.FindAllStudentsUseCas
 import com.techacademy.student.application.usecase.student.FindStudentByEmailUseCase
 import com.techacademy.student.application.usecase.student.FindStudentUseCase
 import jakarta.validation.Valid
+import jakarta.ws.rs.BadRequestException
 import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.POST
@@ -33,10 +34,17 @@ class StudentController(
     }
 
     @GET
-    @Path("/all/ids")
+    @Path("/by-ids")
     @Produces(MediaType.APPLICATION_JSON)
-    fun findAllByIds(@QueryParam("studentIds") studentIds: String): List<StudentDTO> {
-        val ids = studentIds.split(",").map { it.toInt() }
+    fun findAllByIds(@QueryParam("studentIds") studentIds: String?): List<StudentDTO> {
+        if (studentIds.isNullOrBlank()) throw BadRequestException("StudentId é obrigatório!")
+
+        val ids = try {
+            studentIds.split(",").map { it.trim().toInt() }
+        } catch (ex: NumberFormatException) {
+            throw BadRequestException("StudentIds deve ser uma lista de números inteiros!")
+        }
+
         return findAllByIdsUseCase
             .execute(studentIds = ids)
     }
