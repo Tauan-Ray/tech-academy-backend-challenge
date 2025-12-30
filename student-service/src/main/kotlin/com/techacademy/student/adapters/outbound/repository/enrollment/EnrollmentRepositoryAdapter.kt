@@ -17,6 +17,13 @@ class EnrollmentRepositoryAdapter(
             .map { it.toDomain() }
     }
 
+    override fun findAllByStudentIds(studentIds: List<Int>): List<Enrollment> {
+        return hibernateEnrollmentRepository
+            .find("student.id IN ?1 AND deletedAt IS NULL", studentIds)
+            .list()
+            .map { it.toDomain() }
+    }
+
     override fun findById(enrollmentId: Int): Enrollment? {
         return hibernateEnrollmentRepository
             .findById(enrollmentId.toLong())

@@ -4,11 +4,13 @@ import com.techacademy.student.application.dto.CreateEnrollmentDTO
 import com.techacademy.student.application.dto.EnrollmentDTO
 import com.techacademy.student.application.usecase.enrollment.CreateEnrollmentUseCase
 import com.techacademy.student.application.usecase.enrollment.ExistsByStudentAndClassroomUseCase
+import com.techacademy.student.application.usecase.enrollment.FindAllByStudentIdsUseCase
 import com.techacademy.student.application.usecase.enrollment.FindAllEnrollmentsUseCase
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByClassroomUseCase
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByIdUseCase
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByStudentUseCase
 import jakarta.validation.Valid
+import jakarta.ws.rs.BadRequestException
 import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.POST
@@ -21,6 +23,7 @@ import jakarta.ws.rs.core.MediaType
 @Path("/enrollments")
 class EnrollmentController(
     private val findAllEnrollmentsUseCase: FindAllEnrollmentsUseCase,
+    private val findAllByStudentIdsUseCase: FindAllByStudentIdsUseCase,
     private val findEnrollmentByIdUseCase: FindEnrollmentByIdUseCase,
     private val findEnrollmentByStudentUseCase: FindEnrollmentByStudentUseCase,
     private val findEnrollmentByClassroomUseCase: FindEnrollmentByClassroomUseCase,
@@ -33,6 +36,24 @@ class EnrollmentController(
         return findAllEnrollmentsUseCase
             .execute()
     }
+
+    @GET
+    @Path("/students-by-ids")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun findAllByStudentIds(
+        @QueryParam("studentIds") studentIds: String?
+    ): List<EnrollmentDTO> {
+        if (studentIds.isNullOrBlank()) throw BadRequestException("StudentIds é obrigatório!")
+
+        val ids = try {
+            studentIds.split(",").map { it.trim().toInt() }
+        } catch (ex: NumberFormatException) {
+            throw BadRequestException("studentIds deve ser uma lista de números inteiros!")
+        }
+
+        return findAllByStudentIdsUseCase.execute(ids)
+    }
+
 
     @GET
     @Path("/{enrollmentId}")
