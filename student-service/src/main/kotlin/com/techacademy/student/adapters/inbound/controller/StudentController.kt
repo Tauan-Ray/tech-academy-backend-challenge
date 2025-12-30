@@ -3,6 +3,7 @@ package com.techacademy.student.adapters.inbound.controller
 import com.techacademy.student.application.dto.CreateStudentDTO
 import com.techacademy.student.application.dto.StudentDTO
 import com.techacademy.student.application.usecase.student.CreateStudentUseCase
+import com.techacademy.student.application.usecase.student.FindAllByIdsUseCase
 import com.techacademy.student.application.usecase.student.FindAllStudentsUseCase
 import com.techacademy.student.application.usecase.student.FindStudentByEmailUseCase
 import com.techacademy.student.application.usecase.student.FindStudentUseCase
@@ -19,16 +20,25 @@ import jakarta.ws.rs.core.MediaType
 @Path("/students")
 class StudentController(
     private val findAllStudentsUseCase: FindAllStudentsUseCase,
+    private val findAllByIdsUseCase: FindAllByIdsUseCase,
     private val findStudentUseCase: FindStudentUseCase,
     private val findStudentByEmailUseCase: FindStudentByEmailUseCase,
-    private val createStudentUseCase: CreateStudentUseCase
-
+    private val createStudentUseCase: CreateStudentUseCase,
 ) {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     fun findAll(): List<StudentDTO> {
         return findAllStudentsUseCase
             .execute()
+    }
+
+    @GET
+    @Path("/all/ids")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun findAllByIds(@QueryParam("studentIds") studentIds: String): List<StudentDTO> {
+        val ids = studentIds.split(",").map { it.toInt() }
+        return findAllByIdsUseCase
+            .execute(studentIds = ids)
     }
 
     @GET

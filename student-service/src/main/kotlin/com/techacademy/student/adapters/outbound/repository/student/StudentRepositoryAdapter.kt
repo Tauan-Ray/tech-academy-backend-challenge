@@ -20,6 +20,13 @@ class StudentRepositoryAdapter(
             .map { it.toDomain() }
     }
 
+    override fun findAllByIds(studentIds: List<Int>): List<Student> {
+        return hibernateStudentRepository
+            .find("id IN ?1 AND deletedAt IS NULL", studentIds)
+            .list()
+            .map { it.toDomain() }
+    }
+
     override fun findStudent(id: Int): Student? {
         return  hibernateStudentRepository
             .findById(id.toLong())
