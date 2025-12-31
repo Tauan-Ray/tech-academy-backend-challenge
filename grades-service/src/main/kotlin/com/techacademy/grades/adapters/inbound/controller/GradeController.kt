@@ -2,13 +2,16 @@ package com.techacademy.grades.adapters.inbound.controller
 
 import com.techacademy.grades.application.dto.CreateGradeDTO
 import com.techacademy.grades.application.dto.GradeDTO
+import com.techacademy.grades.application.dto.GradeWithSubjectDTO
 import com.techacademy.grades.application.usecase.grade.CreateGradeUseCase
 import com.techacademy.grades.application.usecase.grade.FindAllGradesUseCase
 import com.techacademy.grades.application.usecase.grade.FindExistingGradesUseCase
 import com.techacademy.grades.application.usecase.grade.FindGradeByStudentUseCase
 import com.techacademy.grades.application.usecase.grade.FindGradeUseCase
+import com.techacademy.grades.application.usecase.grade.FindGradesByStudentsUseCase
 import com.techacademy.grades.domain.model.Bimester
 import jakarta.validation.Valid
+import jakarta.ws.rs.BadRequestException
 import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.POST
@@ -23,6 +26,7 @@ class GradeController(
     private val findAllGradesUseCase: FindAllGradesUseCase,
     private val findGradeUseCase: FindGradeUseCase,
     private val findGradeByStudentUseCase: FindGradeByStudentUseCase,
+    private val findGradesByStudentsUseCase: FindGradesByStudentsUseCase,
     private val findExistingGradesUseCase: FindExistingGradesUseCase,
     private val createGradeUseCase: CreateGradeUseCase,
 ) {
@@ -44,9 +48,27 @@ class GradeController(
     @GET
     @Path("/student/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    fun findStudentByEmail(@PathParam("id") id: Int): List<GradeDTO> {
+    fun findGradesByStudents(@PathParam("id") id: Int): List<GradeDTO> {
         return findGradeByStudentUseCase
             .execute(id)
+    }
+
+    @GET
+    @Path("/students/")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun findGradesByStudents(
+        @QueryParam("studentIds") studentIds: String?
+    ): Map<Int, List<GradeWithSubjectDTO>> {
+        if (studentIds.isNullOrBlank()) throw BadRequestException("StudentIds é obrigatório!")
+
+        val ids = try {
+            studentIds.split(",").map { it.trim().toInt() }
+        } catch (ex: NumberFormatException) {
+            throw BadRequestException("studentIds deve ser uma lista de números inteiros!")
+        }
+
+        return findGradesByStudentsUseCase
+            .execute(ids)
     }
 
     @GET
