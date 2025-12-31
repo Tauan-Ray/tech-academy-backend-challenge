@@ -5,6 +5,7 @@ import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.PathParam
 import jakarta.ws.rs.Produces
+import jakarta.ws.rs.QueryParam
 import jakarta.ws.rs.core.MediaType
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient
 
@@ -16,4 +17,9 @@ interface StudentClient {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     fun exists(@PathParam("id") id: Int): StudentResponseDTO?
+
+    @GET
+    @Path("/by-ids")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun findExistingIds(@QueryParam("studentIds") studentIds: String?): List<StudentResponseDTO>
 }

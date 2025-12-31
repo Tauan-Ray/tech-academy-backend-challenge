@@ -15,4 +15,11 @@ class StudentLookupHttpAdapter(
 
         return student != null
     }
+
+    override fun findExistingIds(studentIds: List<Int>): List<Int> {
+        val paramRoute = studentIds.joinToString(",")
+
+        return studentClient.findExistingIds(paramRoute)
+            .map { it.id }
+    }
 }
