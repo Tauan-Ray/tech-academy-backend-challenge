@@ -16,4 +16,17 @@ class EnrollmentLookupHttpAdapter(
 
         return enrollmentIds
     }
+
+    override fun findEnrollmentsByStudents(studentIds: List<Int>): Map<Int, List<Int>> {
+        if (studentIds.isEmpty()) return emptyMap()
+        val paramRoute = studentIds.joinToString(",")
+
+        val enrollments = enrollmentClient.findEnrollmentsByStudent(paramRoute)
+
+        return enrollments
+            .groupBy { it.studentId }
+            .mapValues { (_, enrollments) ->
+                enrollments.map { it.id }
+            }
+    }
 }

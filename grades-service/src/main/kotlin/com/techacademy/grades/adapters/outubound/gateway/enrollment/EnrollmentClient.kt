@@ -5,6 +5,7 @@ import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.PathParam
 import jakarta.ws.rs.Produces
+import jakarta.ws.rs.QueryParam
 import jakarta.ws.rs.core.MediaType
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient
 
@@ -16,4 +17,9 @@ interface EnrollmentClient {
     @Path("/student/{studentId}")
     @Produces(MediaType.APPLICATION_JSON)
     fun findEnrollmentsByStudent(@PathParam("studentId") studentId: Int): List<EnrollmentResponseDTO>
+
+    @GET
+    @Path("/students-by-ids")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun findEnrollmentsByStudent(@QueryParam("studentIds") studentIds: String?): List<EnrollmentResponseDTO>
 }
