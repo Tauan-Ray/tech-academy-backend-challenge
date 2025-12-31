@@ -1,10 +1,12 @@
 package com.techacademy.student.adapters.inbound.controller
 
 import com.techacademy.student.application.dto.CreateStudentDTO
+import com.techacademy.student.application.dto.ReportCardDTO
 import com.techacademy.student.application.dto.StudentDTO
 import com.techacademy.student.application.usecase.student.CreateStudentUseCase
 import com.techacademy.student.application.usecase.student.FindAllByIdsUseCase
 import com.techacademy.student.application.usecase.student.FindAllStudentsUseCase
+import com.techacademy.student.application.usecase.student.FindReportsCardsUseCase
 import com.techacademy.student.application.usecase.student.FindStudentByEmailUseCase
 import com.techacademy.student.application.usecase.student.FindStudentUseCase
 import jakarta.validation.Valid
@@ -25,6 +27,7 @@ class StudentController(
     private val findStudentUseCase: FindStudentUseCase,
     private val findStudentByEmailUseCase: FindStudentByEmailUseCase,
     private val createStudentUseCase: CreateStudentUseCase,
+    private val findReportsCardsUseCase: FindReportsCardsUseCase
 ) {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,6 +49,23 @@ class StudentController(
         }
 
         return findAllByIdsUseCase
+            .execute(studentIds = ids)
+    }
+
+
+    @GET
+    @Path("/report-card")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun generateReportCard(@QueryParam("studentIds") studentIds: String?): List<ReportCardDTO> {
+        if (studentIds.isNullOrBlank()) throw BadRequestException("StudentId é obrigatório!")
+
+        val ids = try {
+            studentIds.split(",").map { it.trim().toInt() }
+        } catch (ex: NumberFormatException) {
+            throw BadRequestException("StudentIds deve ser uma lista de números inteiros!")
+        }
+
+        return findReportsCardsUseCase
             .execute(studentIds = ids)
     }
 
