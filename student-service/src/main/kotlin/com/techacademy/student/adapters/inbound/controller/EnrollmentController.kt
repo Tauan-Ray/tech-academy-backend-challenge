@@ -2,12 +2,14 @@ package com.techacademy.student.adapters.inbound.controller
 
 import com.techacademy.student.application.dto.enrollment.CreateEnrollmentDTO
 import com.techacademy.student.application.dto.enrollment.EnrollmentDTO
+import com.techacademy.student.application.dto.enrollment.EnrollmentWithDetailsDTO
 import com.techacademy.student.application.usecase.enrollment.CreateEnrollmentUseCase
 import com.techacademy.student.application.usecase.enrollment.ExistsByStudentAndClassroomUseCase
 import com.techacademy.student.application.usecase.enrollment.FindAllByStudentIdsUseCase
 import com.techacademy.student.application.usecase.enrollment.FindAllEnrollmentsUseCase
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByClassroomUseCase
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByIdUseCase
+import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByIdWithDetailsUseCase
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByStudentUseCase
 import jakarta.validation.Valid
 import jakarta.ws.rs.BadRequestException
@@ -25,6 +27,7 @@ class EnrollmentController(
     private val findAllEnrollmentsUseCase: FindAllEnrollmentsUseCase,
     private val findAllByStudentIdsUseCase: FindAllByStudentIdsUseCase,
     private val findEnrollmentByIdUseCase: FindEnrollmentByIdUseCase,
+    private val findEnrollmentByIdWithDetailsUseCase: FindEnrollmentByIdWithDetailsUseCase,
     private val findEnrollmentByStudentUseCase: FindEnrollmentByStudentUseCase,
     private val findEnrollmentByClassroomUseCase: FindEnrollmentByClassroomUseCase,
     private val existsByStudentAndClassroomUseCase: ExistsByStudentAndClassroomUseCase,
@@ -62,6 +65,16 @@ class EnrollmentController(
         return findEnrollmentByIdUseCase
             .execute(enrollmentId)
     }
+
+
+    @GET
+    @Path("/{enrollmentId}/details")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun findEnrollmentByIdWithDetails(@PathParam("enrollmentId") enrollmentId: Int): EnrollmentWithDetailsDTO? {
+        return findEnrollmentByIdWithDetailsUseCase
+            .execute(enrollmentId)
+    }
+
 
     @GET
     @Path("/student/{studentId}")
