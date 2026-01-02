@@ -1,4 +1,4 @@
-package com.techacademy.grades.domain.port
+package com.techacademy.grades.application.port
 
 interface EnrollmentLookupPort {
     fun findEnrollmentsByStudent(studentId: Int): List<Int>

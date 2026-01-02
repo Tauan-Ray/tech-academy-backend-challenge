@@ -1,9 +1,9 @@
 package com.techacademy.grades.application.service.grade
 
 import com.techacademy.grades.application.dto.GradeWithSubjectDTO
+import com.techacademy.grades.application.port.EnrollmentLookupPort
 import com.techacademy.grades.application.port.GradeQueryPort
 import com.techacademy.grades.application.usecase.grade.FindGradesByStudentsUseCase
-import com.techacademy.grades.domain.port.EnrollmentLookupPort
 import com.techacademy.grades.domain.port.StudentLookupPort
 import jakarta.enterprise.context.ApplicationScoped
 

@@ -1,6 +1,6 @@
 package com.techacademy.grades.adapters.outubound.gateway.enrollment
 
-import com.techacademy.grades.domain.port.EnrollmentLookupPort
+import com.techacademy.grades.application.port.EnrollmentLookupPort
 import jakarta.enterprise.context.ApplicationScoped
 import org.eclipse.microprofile.rest.client.inject.RestClient
 
