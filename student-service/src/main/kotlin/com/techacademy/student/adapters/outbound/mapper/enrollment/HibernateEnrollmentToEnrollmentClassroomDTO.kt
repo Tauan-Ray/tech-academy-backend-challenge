@@ -10,5 +10,6 @@ fun HibernateEnrollmentEntity.toEnrollmentClassroomDTO(): EnrollmentClassroomDTO
         classroomId = classroom.id!!,
         year = classroom.year,
         course = classroom.course,
+        active = active,
         grade = classroom.grade,
     )

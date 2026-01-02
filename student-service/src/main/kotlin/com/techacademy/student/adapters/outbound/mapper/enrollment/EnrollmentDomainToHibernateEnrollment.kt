@@ -13,6 +13,8 @@ fun Enrollment.toEntity(
         id = this@toEntity.id
         this.student = student
         this.classroom = classroom
+        active = this@toEntity.active
+
         createdAt = requireNotNull(this@toEntity.createdAt)
         updatedAt = requireNotNull(this@toEntity.updatedAt)
         deletedAt = this@toEntity.deletedAt

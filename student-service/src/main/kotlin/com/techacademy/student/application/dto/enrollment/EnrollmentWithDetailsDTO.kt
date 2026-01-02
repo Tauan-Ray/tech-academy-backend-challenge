@@ -8,5 +8,6 @@ data class EnrollmentWithDetailsDTO(
     val id: Int? = null,
     val student: StudentDTO,
     val classroom: ClassroomDTO,
+    val active: Boolean,
     val createdAt: LocalDateTime? = null,
 )

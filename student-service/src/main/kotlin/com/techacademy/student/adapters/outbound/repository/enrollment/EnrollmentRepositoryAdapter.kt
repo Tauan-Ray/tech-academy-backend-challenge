@@ -52,7 +52,10 @@ class EnrollmentRepositoryAdapter(
 
     override fun existsByStudentAndClassroom(studentId: Int, classroomId: Int): Boolean {
         return hibernateEnrollmentRepository
-            .find("classroom.id = ?1 AND student.id = ?2", classroomId, studentId)
+            .find(
+                "classroom.id = ?1 AND student.id = ?2 AND deletedAt is NULL",
+                classroomId, studentId
+            )
             .count() > 0
     }
 

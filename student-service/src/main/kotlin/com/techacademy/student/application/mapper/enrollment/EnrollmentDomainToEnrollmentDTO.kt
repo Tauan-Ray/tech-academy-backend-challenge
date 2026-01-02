@@ -8,5 +8,6 @@ fun Enrollment.toDTO(): EnrollmentDTO =
         id = id,
         studentId = studentId,
         classroomId = classroomId,
+        active = active,
         createdAt = createdAt,
     )

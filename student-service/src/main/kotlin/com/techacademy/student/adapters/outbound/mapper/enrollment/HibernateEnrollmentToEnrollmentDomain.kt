@@ -8,6 +8,7 @@ fun HibernateEnrollmentEntity.toDomain(): Enrollment =
         id = id,
         studentId = student.id!!,
         classroomId = classroom.id!!,
+        active = active,
 
         createdAt = createdAt,
         updatedAt = updatedAt,

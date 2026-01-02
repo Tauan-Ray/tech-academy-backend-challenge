@@ -31,8 +31,8 @@ class HibernateEnrollmentQueryAdapter(
             id = enrollment.id,
             student = enrollment.student.toDTO(),
             classroom = enrollment.classroom.toDTO(),
+            active = enrollment.active,
             createdAt = enrollment.createdAt
-
         )
     }
 }

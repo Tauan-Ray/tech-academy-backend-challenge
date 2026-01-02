@@ -29,6 +29,9 @@ class HibernateEnrollmentEntity {
     @JoinColumn(name = "classroom_id", nullable = false)
     lateinit var classroom: HibernateClassroomEntity
 
+    @Column(name = "active", nullable = false)
+    var active: Boolean = true
+
     @Column(nullable = false, updatable = false, name = "created_at")
     lateinit var createdAt: LocalDateTime
 
