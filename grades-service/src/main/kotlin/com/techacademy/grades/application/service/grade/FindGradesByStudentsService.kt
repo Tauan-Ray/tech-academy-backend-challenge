@@ -28,10 +28,6 @@ class FindGradesByStudentsService(
 
         val gradesByEnrollmentId = grades.groupBy { it.enrollmentId }
 
-        return enrollmentIdsByStudent.mapValues { (_, enrollmentIds) ->
-            enrollmentIds.flatMap { enrollmentId ->
-                gradesByEnrollmentId[enrollmentId].orEmpty()
-            }
-        }
+        return gradesByEnrollmentId
     }
 }

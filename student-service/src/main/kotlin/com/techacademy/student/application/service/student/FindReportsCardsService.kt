@@ -25,7 +25,7 @@ class FindReportsCardsService(
             .findEnrollmentWithClassroomByStudentIds(studentIdsFound)
             .groupBy { it.studentId }
 
-        val gradesByStudentsId =
+        val gradesByEnrollmentId =
             gradeLookupPort.findGradesByStudents(studentIdsFound)
 
         return students.flatMap { student ->
@@ -38,7 +38,7 @@ class FindReportsCardsService(
                     year = enrollment.year,
                     course = enrollment.course,
                     grade = enrollment.grade,
-                    subjects = gradesByStudentsId[student.id]
+                    subjects = gradesByEnrollmentId[enrollment.enrollmentId]
                         .orEmpty()
                         .map { it.toSubjectReportCard() }
                 )
