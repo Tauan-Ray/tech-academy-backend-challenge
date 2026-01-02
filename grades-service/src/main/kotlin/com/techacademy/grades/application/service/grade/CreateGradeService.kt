@@ -7,6 +7,7 @@ import com.techacademy.grades.application.mapper.grade.toDomain
 import com.techacademy.grades.application.port.EnrollmentQueryPort
 import com.techacademy.grades.application.service.exception.EnrollmentNotExistsException
 import com.techacademy.grades.application.service.exception.GradeAlreadyExistsException
+import com.techacademy.grades.application.service.exception.InvalidEnrollmentToGradeException
 import com.techacademy.grades.application.service.exception.SubjectNotExistsException
 import com.techacademy.grades.application.usecase.grade.CreateGradeUseCase
 import com.techacademy.grades.domain.model.Bimester
@@ -32,6 +33,13 @@ class CreateGradeService(
         val subject = subjectRepository
             .findSubject(createGrade.subjectId)
             ?: throw SubjectNotExistsException()
+
+        val isInvalidCourse =
+            subject.course != null && subject.course != enrollment.course
+        val isInvalidGrade =
+            subject.grade != enrollment.grade
+
+        if (isInvalidCourse || isInvalidGrade) throw InvalidEnrollmentToGradeException()
 
         val existingGrade = gradeRepository
             .findExistingGrades(
