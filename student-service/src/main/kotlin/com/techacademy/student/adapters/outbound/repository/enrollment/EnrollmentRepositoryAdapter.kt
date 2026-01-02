@@ -2,13 +2,19 @@ package com.techacademy.student.adapters.outbound.repository.enrollment
 
 import com.techacademy.student.adapters.outbound.mapper.enrollment.toDomain
 import com.techacademy.student.adapters.outbound.mapper.enrollment.toEntity
+import com.techacademy.student.adapters.outbound.repository.classroom.HibernateClassroomRepository
+import com.techacademy.student.adapters.outbound.repository.student.HibernateStudentRepository
+import com.techacademy.student.application.service.exception.ClassroomNotExistsException
+import com.techacademy.student.application.service.exception.StudentNotExistsException
 import com.techacademy.student.domain.model.Enrollment
 import com.techacademy.student.domain.repository.EnrollmentRepositoryPort
 import jakarta.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class EnrollmentRepositoryAdapter(
-    private val hibernateEnrollmentRepository: HibernateEnrollmentRepository
+    private val hibernateEnrollmentRepository: HibernateEnrollmentRepository,
+    private val hibernateClassroomRepository: HibernateClassroomRepository,
+    private val hibernateStudentRepository: HibernateStudentRepository
 ): EnrollmentRepositoryPort {
     override fun findAll(): List<Enrollment> {
         return hibernateEnrollmentRepository
@@ -51,7 +57,15 @@ class EnrollmentRepositoryAdapter(
     }
 
     override fun createEnrollment(enrollment: Enrollment): Enrollment {
-        val entity = enrollment.toEntity()
+        val classroom = hibernateClassroomRepository
+            .findById(enrollment.classroomId.toLong())
+            ?: throw ClassroomNotExistsException()
+
+        val student = hibernateStudentRepository
+            .findById(enrollment.studentId.toLong())
+            ?: throw StudentNotExistsException()
+
+        val entity = enrollment.toEntity(student, classroom)
         hibernateEnrollmentRepository.persist(entity)
 
         return entity.toDomain()
