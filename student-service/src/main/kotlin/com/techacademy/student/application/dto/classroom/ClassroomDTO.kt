@@ -1,4 +1,4 @@
-package com.techacademy.student.application.dto
+package com.techacademy.student.application.dto.classroom
 
 import java.time.LocalDateTime
 

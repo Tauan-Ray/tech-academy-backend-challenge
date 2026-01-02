@@ -1,5 +1,6 @@
 package com.techacademy.student.application.dto
 
+import com.techacademy.student.application.dto.student.Bimester
 import java.math.BigDecimal
 
 data class GradeResponseDTO(

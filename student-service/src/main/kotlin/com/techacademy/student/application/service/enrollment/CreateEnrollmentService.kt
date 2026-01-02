@@ -1,7 +1,7 @@
 package com.techacademy.student.application.service.enrollment
 
-import com.techacademy.student.application.dto.CreateEnrollmentDTO
-import com.techacademy.student.application.dto.EnrollmentDTO
+import com.techacademy.student.application.dto.enrollment.CreateEnrollmentDTO
+import com.techacademy.student.application.dto.enrollment.EnrollmentDTO
 import com.techacademy.student.application.mapper.enrollment.toDTO
 import com.techacademy.student.application.mapper.enrollment.toDomain
 import com.techacademy.student.application.service.exception.ClassroomNotExistsException

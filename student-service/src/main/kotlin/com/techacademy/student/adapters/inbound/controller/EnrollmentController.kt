@@ -1,7 +1,7 @@
 package com.techacademy.student.adapters.inbound.controller
 
-import com.techacademy.student.application.dto.CreateEnrollmentDTO
-import com.techacademy.student.application.dto.EnrollmentDTO
+import com.techacademy.student.application.dto.enrollment.CreateEnrollmentDTO
+import com.techacademy.student.application.dto.enrollment.EnrollmentDTO
 import com.techacademy.student.application.usecase.enrollment.CreateEnrollmentUseCase
 import com.techacademy.student.application.usecase.enrollment.ExistsByStudentAndClassroomUseCase
 import com.techacademy.student.application.usecase.enrollment.FindAllByStudentIdsUseCase

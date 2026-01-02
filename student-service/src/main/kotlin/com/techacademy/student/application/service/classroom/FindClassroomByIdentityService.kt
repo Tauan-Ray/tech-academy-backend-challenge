@@ -1,6 +1,6 @@
 package com.techacademy.student.application.service.classroom
 
-import com.techacademy.student.application.dto.ClassroomDTO
+import com.techacademy.student.application.dto.classroom.ClassroomDTO
 import com.techacademy.student.application.mapper.classroom.toDTO
 import com.techacademy.student.application.service.exception.MissingClassroomFilterException
 import com.techacademy.student.application.usecase.classroom.FindClassroomByIdentityUseCase

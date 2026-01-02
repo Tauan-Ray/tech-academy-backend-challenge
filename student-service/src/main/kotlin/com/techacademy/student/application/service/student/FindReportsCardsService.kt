@@ -1,6 +1,6 @@
 package com.techacademy.student.application.service.student
 
-import com.techacademy.student.application.dto.ReportCardDTO
+import com.techacademy.student.application.dto.student.ReportCardDTO
 import com.techacademy.student.application.mapper.student.toSubjectReportCard
 import com.techacademy.student.application.port.EnrollmentQueryPort
 import com.techacademy.student.application.usecase.student.FindReportsCardsUseCase

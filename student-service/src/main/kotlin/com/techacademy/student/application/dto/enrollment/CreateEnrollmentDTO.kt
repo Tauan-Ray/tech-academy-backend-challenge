@@ -1,6 +1,5 @@
-package com.techacademy.student.application.dto
+package com.techacademy.student.application.dto.enrollment
 
-import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Positive
 

@@ -1,7 +1,7 @@
 package com.techacademy.student.application.service.classroom
 
-import com.techacademy.student.application.dto.ClassroomDTO
-import com.techacademy.student.application.dto.CreateClassroomDTO
+import com.techacademy.student.application.dto.classroom.ClassroomDTO
+import com.techacademy.student.application.dto.classroom.CreateClassroomDTO
 import com.techacademy.student.application.mapper.classroom.toDTO
 import com.techacademy.student.application.mapper.classroom.toDomain
 import com.techacademy.student.application.service.exception.ClassroomAlreadyExistsException

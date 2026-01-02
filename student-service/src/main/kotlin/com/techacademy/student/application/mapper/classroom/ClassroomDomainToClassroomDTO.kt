@@ -1,6 +1,6 @@
 package com.techacademy.student.application.mapper.classroom
 
-import com.techacademy.student.application.dto.ClassroomDTO
+import com.techacademy.student.application.dto.classroom.ClassroomDTO
 import com.techacademy.student.domain.model.Classroom
 
 fun Classroom.toDTO(): ClassroomDTO =

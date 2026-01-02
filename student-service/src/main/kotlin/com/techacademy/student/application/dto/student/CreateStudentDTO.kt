@@ -1,4 +1,4 @@
-package com.techacademy.student.application.dto
+package com.techacademy.student.application.dto.student
 
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank

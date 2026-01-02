@@ -1,4 +1,4 @@
-package com.techacademy.student.application.dto
+package com.techacademy.student.application.dto.classroom
 
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min

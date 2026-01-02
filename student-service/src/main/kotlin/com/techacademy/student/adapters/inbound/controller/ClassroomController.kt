@@ -1,8 +1,8 @@
 package com.techacademy.student.adapters.inbound.controller
 
-import com.techacademy.student.application.dto.ClassroomDTO
-import com.techacademy.student.application.dto.CreateClassroomDTO
-import com.techacademy.student.application.dto.StudentDTO
+import com.techacademy.student.application.dto.classroom.ClassroomDTO
+import com.techacademy.student.application.dto.classroom.CreateClassroomDTO
+import com.techacademy.student.application.dto.student.StudentDTO
 import com.techacademy.student.application.usecase.classroom.CreateClassroomUseCase
 import com.techacademy.student.application.usecase.classroom.FindAllClassroomsUseCase
 import com.techacademy.student.application.usecase.classroom.FindClassroomByIdentityUseCase

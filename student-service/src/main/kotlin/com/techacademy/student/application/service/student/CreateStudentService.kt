@@ -1,7 +1,7 @@
 package com.techacademy.student.application.service.student
 
-import com.techacademy.student.application.dto.CreateStudentDTO
-import com.techacademy.student.application.dto.StudentDTO
+import com.techacademy.student.application.dto.student.CreateStudentDTO
+import com.techacademy.student.application.dto.student.StudentDTO
 import com.techacademy.student.application.mapper.student.toDTO
 import com.techacademy.student.application.mapper.student.toDomain
 import com.techacademy.student.application.service.exception.EmailAlreadyExistsException
