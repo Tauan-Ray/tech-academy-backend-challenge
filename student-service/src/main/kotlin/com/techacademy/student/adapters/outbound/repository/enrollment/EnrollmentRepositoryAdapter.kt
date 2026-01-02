@@ -59,6 +59,12 @@ class EnrollmentRepositoryAdapter(
             .count() > 0
     }
 
+    override fun existsActiveByStudent(studentId: Int): Boolean {
+        return hibernateEnrollmentRepository
+            .find("student.id = ?1 AND active = true AND deletedAt IS NULL", studentId)
+            .count() > 0
+    }
+
     override fun createEnrollment(enrollment: Enrollment): Enrollment {
         val classroom = hibernateClassroomRepository
             .findById(enrollment.classroomId.toLong())

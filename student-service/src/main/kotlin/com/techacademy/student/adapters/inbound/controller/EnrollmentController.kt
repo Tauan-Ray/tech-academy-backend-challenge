@@ -5,6 +5,7 @@ import com.techacademy.student.application.dto.enrollment.EnrollmentDTO
 import com.techacademy.student.application.dto.enrollment.EnrollmentWithDetailsDTO
 import com.techacademy.student.application.usecase.enrollment.CreateEnrollmentUseCase
 import com.techacademy.student.application.usecase.enrollment.ExistsByStudentAndClassroomUseCase
+import com.techacademy.student.application.usecase.enrollment.ExistsEnrollmentActiveByStudentUseCase
 import com.techacademy.student.application.usecase.enrollment.FindAllByStudentIdsUseCase
 import com.techacademy.student.application.usecase.enrollment.FindAllEnrollmentsUseCase
 import com.techacademy.student.application.usecase.enrollment.FindEnrollmentByClassroomUseCase
@@ -31,6 +32,7 @@ class EnrollmentController(
     private val findEnrollmentByStudentUseCase: FindEnrollmentByStudentUseCase,
     private val findEnrollmentByClassroomUseCase: FindEnrollmentByClassroomUseCase,
     private val existsByStudentAndClassroomUseCase: ExistsByStudentAndClassroomUseCase,
+    private val existsEnrollmentActiveByStudentUseCase: ExistsEnrollmentActiveByStudentUseCase,
     private val createEnrollmentUseCase: CreateEnrollmentUseCase,
 ) {
     @GET
@@ -100,6 +102,15 @@ class EnrollmentController(
     ): Boolean {
         return existsByStudentAndClassroomUseCase
             .execute(studentId, classroomId)
+    }
+
+    @GET
+    @Path("/active")
+    fun existsEnrollmentActive(
+        @QueryParam("studentId") studentId: Int,
+    ): Boolean {
+        return existsEnrollmentActiveByStudentUseCase
+            .execute(studentId)
     }
 
     @POST

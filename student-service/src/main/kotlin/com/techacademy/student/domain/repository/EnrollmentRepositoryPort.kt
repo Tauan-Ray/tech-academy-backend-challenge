@@ -13,4 +13,5 @@ interface EnrollmentRepositoryPort {
         studentId: Int,
         classroomId: Int
     ): Boolean
+    fun existsActiveByStudent(studentId: Int): Boolean
 }
