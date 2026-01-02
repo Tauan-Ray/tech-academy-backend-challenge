@@ -38,6 +38,7 @@ class FindReportsCardsService(
                     year = enrollment.year,
                     course = enrollment.course,
                     grade = enrollment.grade,
+                    active = enrollment.active,
                     subjects = gradesByEnrollmentId[enrollment.enrollmentId]
                         .orEmpty()
                         .map { it.toSubjectReportCard() }

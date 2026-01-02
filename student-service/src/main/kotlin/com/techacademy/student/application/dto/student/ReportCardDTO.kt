@@ -22,5 +22,6 @@ data class ReportCardDTO (
     val year: Int,
     val course: String,
     val grade: Int,
+    val active: Boolean,
     val subjects: List<SubjectReportCardDTO>
 )
