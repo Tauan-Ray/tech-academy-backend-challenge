@@ -4,6 +4,8 @@ import com.techacademy.grades.application.dto.CreateGradeDTO
 import com.techacademy.grades.application.dto.GradeDTO
 import com.techacademy.grades.application.mapper.grade.toDTO
 import com.techacademy.grades.application.mapper.grade.toDomain
+import com.techacademy.grades.application.port.EnrollmentQueryPort
+import com.techacademy.grades.application.service.exception.EnrollmentNotExistsException
 import com.techacademy.grades.application.service.exception.GradeAlreadyExistsException
 import com.techacademy.grades.application.service.exception.SubjectNotExistsException
 import com.techacademy.grades.application.usecase.grade.CreateGradeUseCase
@@ -18,11 +20,16 @@ import java.time.LocalDateTime
 class CreateGradeService(
     private val gradeRepository: GradeRepositoryPort,
     private val subjectRepository: SubjectRepositoryPort,
+    private val enrollmentQueryPort: EnrollmentQueryPort,
 ): CreateGradeUseCase {
 
     @Transactional
     override fun execute(createGrade: CreateGradeDTO): GradeDTO {
-        subjectRepository
+        val enrollment = enrollmentQueryPort
+            .findEnrollmentById(createGrade.enrollmentId)
+            ?: throw EnrollmentNotExistsException()
+
+        val subject = subjectRepository
             .findSubject(createGrade.subjectId)
             ?: throw SubjectNotExistsException()
 
@@ -30,8 +37,8 @@ class CreateGradeService(
             .findExistingGrades(
                 createGrade.enrollmentId,
                 createGrade.subjectId,
-                Bimester.valueOf(createGrade.bimester
-            ))
+                Bimester.valueOf(createGrade.bimester)
+            )
 
         if (existingGrade.isNotEmpty()) throw GradeAlreadyExistsException()
 
