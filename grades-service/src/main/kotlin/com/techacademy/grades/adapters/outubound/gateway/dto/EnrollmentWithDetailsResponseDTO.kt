@@ -6,5 +6,6 @@ data class EnrollmentWithDetailsResponseDTO(
     val id: Int? = null,
     val student: StudentResponseDTO,
     val classroom: ClassroomResponseDTO,
+    val active: Boolean,
     val createdAt: LocalDateTime? = null,
 )

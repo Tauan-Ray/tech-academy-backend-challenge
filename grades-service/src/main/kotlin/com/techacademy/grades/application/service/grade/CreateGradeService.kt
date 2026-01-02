@@ -5,6 +5,7 @@ import com.techacademy.grades.application.dto.GradeDTO
 import com.techacademy.grades.application.mapper.grade.toDTO
 import com.techacademy.grades.application.mapper.grade.toDomain
 import com.techacademy.grades.application.port.EnrollmentQueryPort
+import com.techacademy.grades.application.service.exception.EnrollmentDeactivateException
 import com.techacademy.grades.application.service.exception.EnrollmentNotExistsException
 import com.techacademy.grades.application.service.exception.GradeAlreadyExistsException
 import com.techacademy.grades.application.service.exception.InvalidEnrollmentToGradeException
@@ -40,6 +41,7 @@ class CreateGradeService(
             subject.grade != enrollment.grade
 
         if (isInvalidCourse || isInvalidGrade) throw InvalidEnrollmentToGradeException()
+        if (!enrollment.active) throw EnrollmentDeactivateException()
 
         val existingGrade = gradeRepository
             .findExistingGrades(

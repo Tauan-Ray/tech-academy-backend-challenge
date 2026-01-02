@@ -8,5 +8,6 @@ data class EnrollmentDetailsDTO (
     val year: Int,
     val course: String,
     val grade: Int,
+    val active: Boolean,
     val createdAt: LocalDateTime? = null,
 )

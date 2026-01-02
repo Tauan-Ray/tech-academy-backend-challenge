@@ -20,6 +20,7 @@ class EnrollmentQueryHttpAdapter(
             year = enrollment.classroom.year,
             course = enrollment.classroom.course,
             grade = enrollment.classroom.grade,
+            active = enrollment.active,
         )
     }
 }
