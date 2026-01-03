@@ -1,9 +1,23 @@
-# Config Database
+# Database
 quarkus.datasource.db-kind=postgresql
-quarkus.datasource.username=postgres
-quarkus.datasource.password=postgres
-quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/db
 quarkus.hibernate-orm.database.generation=validate
 
-# Config Flyway
+# Flyway
 quarkus.flyway.migrate-at-start=true
+
+
+# Profile DEV
+%dev.quarkus.datasource.username=postgres
+%dev.quarkus.datasource.password=postgres
+%dev.quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/db
+
+%dev.quarkus.http.port=8080
+
+%dev.quarkus.rest-client.grades-api.url=http://localhost:8081
+
+# Profile PROD (Docker)
+%prod.quarkus.datasource.username=${STUDENTS_SERVICE_DB_USER}
+%prod.quarkus.datasource.password=${STUDENTS_SERVICE_DB_PASSWORD}
+%prod.quarkus.datasource.jdbc.url=jdbc:postgresql://students-service-database:5432/${STUDENTS_SERVICE_DB}
+
+%prod.quarkus.rest-client.grades-api.url=http://grades-service-api:8080

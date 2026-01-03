@@ -1,0 +1,92 @@
+services:
+  students-service-database:
+    image: postgres:16-alpine
+    container_name: students_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${STUDENTS_SERVICE_DB_USER}
+      POSTGRES_PASSWORD: ${STUDENTS_SERVICE_DB_PASSWORD}
+      POSTGRES_DB: ${STUDENTS_SERVICE_DB}
+    ports:
+      - "${STUDENTS_SERVICE_DB_EXTERNAL}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - students-service-data:/var/lib/postgresql/data
+    networks:
+      - students-service-network
+
+  students-service-api:
+    build:
+      context: ./student-service
+      dockerfile: Dockerfile
+    container_name: students_service
+    restart: always
+    ports:
+      - "${STUDENT_SERVICE_EXTERNAL_PORT}:8080"
+    env_file:
+      - .env
+    environment:
+      QUARKUS_PROFILE: prod
+    depends_on:
+      students-service-database:
+        condition: service_healthy
+    networks:
+      - students-service-network
+      - services-network
+
+  grades-service-database:
+    image: postgres:16-alpine
+    container_name: grades_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${GRADES_SERVICE_DB_USER}
+      POSTGRES_PASSWORD: ${GRADES_SERVICE_DB_PASSWORD}
+      POSTGRES_DB: ${GRADES_SERVICE_DB}
+    ports:
+      - "${GRADES_SERVICE_DB_EXTERNAL}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - grades-service-data:/var/lib/postgresql/data
+    networks:
+      - grades-service-network
+
+  grades-service-api:
+    build:
+      context: ./grades-service
+      dockerfile: Dockerfile
+    container_name: grades_service
+    restart: always
+    ports:
+      - "${GRADE_SERVICE_EXTERNAL_PORT}:8080"
+    env_file:
+      - .env
+    environment:
+      QUARKUS_PROFILE: prod
+    depends_on:
+      grades-service-database:
+        condition: service_healthy
+    networks:
+      - grades-service-network
+      - services-network
+
+
+
+volumes:
+  students-service-data:
+  grades-service-data:
+
+networks:
+  students-service-network:
+    driver: bridge
+  grades-service-network:
+    driver: bridge
+  services-network:
+    driver: bridge
