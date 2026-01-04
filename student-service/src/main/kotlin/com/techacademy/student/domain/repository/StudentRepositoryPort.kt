@@ -9,4 +9,5 @@ interface StudentRepositoryPort {
     fun findStudentByEmail(email: String): Student?
     fun createStudent(student: Student): Student
     fun updateStudent(student: Student): Student
+    fun deleteStudent(id: Int)
 }

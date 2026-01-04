@@ -5,6 +5,7 @@ import com.techacademy.student.application.dto.student.ReportCardDTO
 import com.techacademy.student.application.dto.student.StudentDTO
 import com.techacademy.student.application.dto.student.UpdateStudentDTO
 import com.techacademy.student.application.usecase.student.CreateStudentUseCase
+import com.techacademy.student.application.usecase.student.DeleteStudentUseCase
 import com.techacademy.student.application.usecase.student.FindAllByIdsUseCase
 import com.techacademy.student.application.usecase.student.FindAllStudentsUseCase
 import com.techacademy.student.application.usecase.student.FindReportsCardsUseCase
@@ -14,6 +15,7 @@ import com.techacademy.student.application.usecase.student.UpdateStudentUseCase
 import jakarta.validation.Valid
 import jakarta.ws.rs.BadRequestException
 import jakarta.ws.rs.Consumes
+import jakarta.ws.rs.DELETE
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.PATCH
 import jakarta.ws.rs.POST
@@ -31,7 +33,8 @@ class StudentController(
     private val findStudentByEmailUseCase: FindStudentByEmailUseCase,
     private val findReportsCardsUseCase: FindReportsCardsUseCase,
     private val createStudentUseCase: CreateStudentUseCase,
-    private val updateStudentUseCase: UpdateStudentUseCase
+    private val updateStudentUseCase: UpdateStudentUseCase,
+    private val deleteStudentUseCase: DeleteStudentUseCase,
 ) {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -104,5 +107,12 @@ class StudentController(
     fun updateUser(@PathParam("id") id: Int, @Valid updateStudent: UpdateStudentDTO): StudentDTO {
         return updateStudentUseCase
             .execute(id, updateStudent)
+    }
+
+    @DELETE
+    @Path("/{id}")
+    fun updateUser(@PathParam("id") id: Int) {
+        return deleteStudentUseCase
+            .execute(id)
     }
 }

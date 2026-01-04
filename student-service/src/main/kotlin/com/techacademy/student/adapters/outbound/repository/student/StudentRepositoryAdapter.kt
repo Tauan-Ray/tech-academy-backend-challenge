@@ -2,17 +2,15 @@ package com.techacademy.student.adapters.outbound.repository.student
 
 import com.techacademy.student.adapters.outbound.mapper.student.toDomain
 import com.techacademy.student.adapters.outbound.mapper.student.toEntity
-import com.techacademy.student.adapters.outbound.repository.classroom.HibernateClassroomRepository
-import com.techacademy.student.application.service.exception.ClassroomNotExistsException
 import com.techacademy.student.application.service.exception.StudentNotExistsException
 import com.techacademy.student.domain.model.Student
 import com.techacademy.student.domain.repository.StudentRepositoryPort
 import jakarta.enterprise.context.ApplicationScoped
+import java.time.LocalDateTime
 
 @ApplicationScoped
 class StudentRepositoryAdapter(
     private val hibernateStudentRepository: HibernateStudentRepository,
-    private val hibernateClassroomRepository: HibernateClassroomRepository
 ): StudentRepositoryPort {
     override fun findAll(): List<Student> {
         return hibernateStudentRepository
@@ -57,5 +55,14 @@ class StudentRepositoryAdapter(
         entity.email = student.email
 
         return entity.toDomain()
+    }
+
+    override fun deleteStudent(id: Int) {
+        val entity = hibernateStudentRepository
+            .find("id = ?1 AND deletedAt IS NULL", id)
+            .firstResult()
+            ?: throw StudentNotExistsException()
+
+        entity.deletedAt = LocalDateTime.now()
     }
 }
