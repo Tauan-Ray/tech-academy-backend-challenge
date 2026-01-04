@@ -4,6 +4,7 @@ import com.techacademy.student.adapters.outbound.mapper.student.toDomain
 import com.techacademy.student.adapters.outbound.mapper.student.toEntity
 import com.techacademy.student.adapters.outbound.repository.classroom.HibernateClassroomRepository
 import com.techacademy.student.application.service.exception.ClassroomNotExistsException
+import com.techacademy.student.application.service.exception.StudentNotExistsException
 import com.techacademy.student.domain.model.Student
 import com.techacademy.student.domain.repository.StudentRepositoryPort
 import jakarta.enterprise.context.ApplicationScoped
@@ -45,5 +46,16 @@ class StudentRepositoryAdapter(
         hibernateStudentRepository.persist(student)
 
         return student.toDomain()
+    }
+
+    override fun updateStudent(student: Student): Student {
+        val studentId = student.id ?: throw StudentNotExistsException()
+        val entity = hibernateStudentRepository.findById(studentId.toLong())
+            ?: throw StudentNotExistsException()
+
+        entity.name = student.name
+        entity.email = student.email
+
+        return entity.toDomain()
     }
 }

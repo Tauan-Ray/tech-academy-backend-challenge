@@ -3,16 +3,19 @@ package com.techacademy.student.adapters.inbound.controller
 import com.techacademy.student.application.dto.student.CreateStudentDTO
 import com.techacademy.student.application.dto.student.ReportCardDTO
 import com.techacademy.student.application.dto.student.StudentDTO
+import com.techacademy.student.application.dto.student.UpdateStudentDTO
 import com.techacademy.student.application.usecase.student.CreateStudentUseCase
 import com.techacademy.student.application.usecase.student.FindAllByIdsUseCase
 import com.techacademy.student.application.usecase.student.FindAllStudentsUseCase
 import com.techacademy.student.application.usecase.student.FindReportsCardsUseCase
 import com.techacademy.student.application.usecase.student.FindStudentByEmailUseCase
 import com.techacademy.student.application.usecase.student.FindStudentUseCase
+import com.techacademy.student.application.usecase.student.UpdateStudentUseCase
 import jakarta.validation.Valid
 import jakarta.ws.rs.BadRequestException
 import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.GET
+import jakarta.ws.rs.PATCH
 import jakarta.ws.rs.POST
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.PathParam
@@ -26,8 +29,9 @@ class StudentController(
     private val findAllByIdsUseCase: FindAllByIdsUseCase,
     private val findStudentUseCase: FindStudentUseCase,
     private val findStudentByEmailUseCase: FindStudentByEmailUseCase,
+    private val findReportsCardsUseCase: FindReportsCardsUseCase,
     private val createStudentUseCase: CreateStudentUseCase,
-    private val findReportsCardsUseCase: FindReportsCardsUseCase
+    private val updateStudentUseCase: UpdateStudentUseCase
 ) {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -91,5 +95,14 @@ class StudentController(
     fun createUser(@Valid createStudent: CreateStudentDTO): StudentDTO {
         return createStudentUseCase
             .execute(createStudent)
+    }
+
+    @PATCH
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    fun updateUser(@PathParam("id") id: Int, @Valid updateStudent: UpdateStudentDTO): StudentDTO {
+        return updateStudentUseCase
+            .execute(id, updateStudent)
     }
 }
