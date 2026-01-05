@@ -25,6 +25,8 @@ class FindReportsCardsService(
             .findEnrollmentWithClassroomByStudentIds(studentIdsFound)
             .groupBy { it.studentId }
 
+        if (enrollmentsByStudent.isEmpty()) return emptyList()
+
         val gradesByEnrollmentId =
             gradeLookupPort.findGradesByStudents(studentIdsFound)
 
