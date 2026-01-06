@@ -39,10 +39,11 @@ class CreateEnrollmentService(
                 createEnrollment.classroomId,
             )
 
+        if (existsEnrollment) throw EnrollmentAlreadyExistsException()
+
         val activeEnrollment = enrollmentRepository
             .existsActiveByStudent(createEnrollment.studentId)
 
-        if (existsEnrollment) throw EnrollmentAlreadyExistsException()
         if (activeEnrollment) throw ActiveEnrollmentException()
 
         val enrollment = createEnrollment.toDomain()
