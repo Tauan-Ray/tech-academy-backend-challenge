@@ -13,13 +13,13 @@ class FindExistingGradesService(
     private val gradeRepository: GradeRepositoryPort
 ): FindExistingGradesUseCase {
 
-    override fun execute(studentId: Int?, subjectId: Int?, bimester: Bimester?): List<GradeDTO> {
-        if (listOf(studentId, subjectId, bimester).all { it == null }){
+    override fun execute(enrollmentId: Int?, subjectId: Int?, bimester: Bimester?): List<GradeDTO> {
+        if (listOf(enrollmentId, subjectId, bimester).all { it == null }){
             throw MissingGradeFilterException()
         }
 
         return gradeRepository
-            .findExistingGrades(studentId, subjectId, bimester)
+            .findExistingGrades(enrollmentId, subjectId, bimester)
             .map { it.toDTO() }
     }
 }
