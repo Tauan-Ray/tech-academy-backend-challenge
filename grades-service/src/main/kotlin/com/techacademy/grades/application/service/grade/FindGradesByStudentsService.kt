@@ -3,6 +3,7 @@ package com.techacademy.grades.application.service.grade
 import com.techacademy.grades.application.dto.GradeWithSubjectDTO
 import com.techacademy.grades.application.port.EnrollmentLookupPort
 import com.techacademy.grades.application.port.GradeQueryPort
+import com.techacademy.grades.application.service.exception.StudentNotExistsException
 import com.techacademy.grades.application.usecase.grade.FindGradesByStudentsUseCase
 import com.techacademy.grades.domain.port.StudentLookupPort
 import jakarta.enterprise.context.ApplicationScoped
@@ -16,7 +17,7 @@ class FindGradesByStudentsService(
 
     override fun execute(studentIds: List<Int>): Map<Int, List<GradeWithSubjectDTO>> {
         val existingStudentsIds = studentLookupPort.findExistingIds(studentIds)
-        if (existingStudentsIds.isEmpty()) return emptyMap()
+        if (existingStudentsIds.isEmpty()) throw StudentNotExistsException()
 
         val enrollmentIdsByStudent = enrollmentLookupPort
             .findEnrollmentsByStudents(existingStudentsIds)
