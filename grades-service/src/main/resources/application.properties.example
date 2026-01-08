@@ -5,6 +5,13 @@ quarkus.hibernate-orm.database.generation=validate
 # Flyway
 quarkus.flyway.migrate-at-start=true
 
+# Gera OpenAPI JSON
+mp.openapi.path=/openapi
+
+# Swagger UI
+quarkus.swagger-ui.path=/docs
+quarkus.swagger-ui.url=/openapi
+
 # Profile DEV
 %dev.quarkus.datasource.username=postgres
 %dev.quarkus.datasource.password=postgres
@@ -14,6 +21,9 @@ quarkus.flyway.migrate-at-start=true
 
 %dev.quarkus.rest-client.student-api.url=http://localhost:8080
 
+%prod.mp.openapi.extensions.smallrye.generate-always=true
+%prod.quarkus.swagger-ui.always-include=true
+
 
 # Profile PROD (Docker)
 %prod.quarkus.datasource.username=${GRADES_SERVICE_DB_USER}
@@ -21,3 +31,6 @@ quarkus.flyway.migrate-at-start=true
 %prod.quarkus.datasource.jdbc.url=jdbc:postgresql://grades-service-database:5432/${GRADES_SERVICE_DB}
 
 %prod.quarkus.rest-client.student-api.url=http://students-service-api:8080
+
+%prod.mp.openapi.extensions.smallrye.generate-always=false
+%prod.quarkus.swagger-ui.always-include=false
