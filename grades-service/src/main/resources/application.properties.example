@@ -12,6 +12,9 @@ mp.openapi.path=/openapi
 quarkus.swagger-ui.path=/docs/api
 quarkus.swagger-ui.url=/openapi
 
+mp.openapi.extensions.smallrye.generate-always=true
+quarkus.swagger-ui.always-include=true
+
 # Profile DEV
 %dev.quarkus.datasource.username=postgres
 %dev.quarkus.datasource.password=postgres
@@ -21,9 +24,6 @@ quarkus.swagger-ui.url=/openapi
 
 %dev.quarkus.rest-client.student-api.url=http://localhost:8080
 
-%prod.mp.openapi.extensions.smallrye.generate-always=true
-%prod.quarkus.swagger-ui.always-include=true
-
 
 # Profile PROD (Docker)
 %prod.quarkus.datasource.username=${GRADES_SERVICE_DB_USER}
@@ -31,6 +31,3 @@ quarkus.swagger-ui.url=/openapi
 %prod.quarkus.datasource.jdbc.url=jdbc:postgresql://grades-service-database:5432/${GRADES_SERVICE_DB}
 
 %prod.quarkus.rest-client.student-api.url=http://students-service-api:8080
-
-%prod.mp.openapi.extensions.smallrye.generate-always=false
-%prod.quarkus.swagger-ui.always-include=false
