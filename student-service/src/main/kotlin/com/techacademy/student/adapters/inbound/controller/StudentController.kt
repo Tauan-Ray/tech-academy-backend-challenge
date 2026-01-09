@@ -1,25 +1,8 @@
 package com.techacademy.student.adapters.inbound.controller
 
-import com.techacademy.student.adapters.inbound.documentation.student.CreateStudentDoc
-import com.techacademy.student.adapters.inbound.documentation.student.DeleteStudentDoc
-import com.techacademy.student.adapters.inbound.documentation.student.FindAllStudentsDoc
-import com.techacademy.student.adapters.inbound.documentation.student.FindStudentByEmailDoc
-import com.techacademy.student.adapters.inbound.documentation.student.FindStudentByIdDoc
-import com.techacademy.student.adapters.inbound.documentation.student.FindStudentsByIdsDoc
-import com.techacademy.student.adapters.inbound.documentation.student.GenerateReportCardDoc
-import com.techacademy.student.adapters.inbound.documentation.student.UpdateStudentDoc
-import com.techacademy.student.application.dto.student.CreateStudentDTO
-import com.techacademy.student.application.dto.student.ReportCardDTO
-import com.techacademy.student.application.dto.student.StudentDTO
-import com.techacademy.student.application.dto.student.UpdateStudentDTO
-import com.techacademy.student.application.usecase.student.CreateStudentUseCase
-import com.techacademy.student.application.usecase.student.DeleteStudentUseCase
-import com.techacademy.student.application.usecase.student.FindAllByIdsUseCase
-import com.techacademy.student.application.usecase.student.FindAllStudentsUseCase
-import com.techacademy.student.application.usecase.student.FindReportsCardsUseCase
-import com.techacademy.student.application.usecase.student.FindStudentByEmailUseCase
-import com.techacademy.student.application.usecase.student.FindStudentUseCase
-import com.techacademy.student.application.usecase.student.UpdateStudentUseCase
+import com.techacademy.student.adapters.inbound.documentation.student.*
+import com.techacademy.student.application.dto.student.*
+import com.techacademy.student.application.usecase.student.*
 import jakarta.validation.Valid
 import jakarta.ws.rs.BadRequestException
 import jakarta.ws.rs.Consumes
@@ -34,12 +17,10 @@ import jakarta.ws.rs.QueryParam
 import jakarta.ws.rs.core.MediaType
 import org.eclipse.microprofile.openapi.annotations.tags.Tag
 import org.eclipse.microprofile.openapi.annotations.Operation
-import org.eclipse.microprofile.openapi.annotations.enums.SchemaType
-import org.eclipse.microprofile.openapi.annotations.media.Content
-import org.eclipse.microprofile.openapi.annotations.media.Schema
+import org.eclipse.microprofile.openapi.annotations.enums.Explode
+import org.eclipse.microprofile.openapi.annotations.enums.ParameterStyle
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameters
-import org.eclipse.microprofile.openapi.annotations.responses.APIResponse
 
 
 @Path("/students")
@@ -81,13 +62,15 @@ class StudentController(
                 name = "studentIds",
                 description = "Lista de IDs dos alunos separados por vírgula",
                 example = "1,2,3",
-                required = true
+                style = ParameterStyle.FORM,
+                explode = Explode.FALSE
             )
         ]
     )
     @FindStudentsByIdsDoc
     fun findAllByIds(@QueryParam("studentIds") studentIds: String?): List<StudentDTO> {
-        if (studentIds.isNullOrBlank()) throw BadRequestException("StudentId é obrigatório!")
+        if (studentIds.isNullOrBlank())
+            throw BadRequestException("StudentIds é obrigatório!")
 
         val ids = try {
             studentIds.split(",").map { it.trim().toInt() }
@@ -111,7 +94,8 @@ class StudentController(
                 name = "studentIds",
                 description = "Lista de IDs dos alunos separados por vírgula",
                 example = "1,2,3",
-                required = true
+                style = ParameterStyle.FORM,
+                explode = Explode.FALSE
             )
         ]
     )
@@ -119,9 +103,8 @@ class StudentController(
     fun generateReportCard(
         @QueryParam("studentIds") studentIds: String?
     ): List<ReportCardDTO> {
-
         if (studentIds.isNullOrBlank())
-            throw BadRequestException("StudentId é obrigatório!")
+            throw BadRequestException("StudentIds é obrigatório!")
 
         val ids = try {
             studentIds.split(",").map { it.trim().toInt() }
@@ -210,5 +193,4 @@ class StudentController(
     ) {
         deleteStudentUseCase.execute(id)
     }
-
 }

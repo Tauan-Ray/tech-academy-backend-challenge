@@ -16,6 +16,8 @@ import jakarta.ws.rs.Produces
 import jakarta.ws.rs.QueryParam
 import jakarta.ws.rs.core.MediaType
 import org.eclipse.microprofile.openapi.annotations.Operation
+import org.eclipse.microprofile.openapi.annotations.enums.Explode
+import org.eclipse.microprofile.openapi.annotations.enums.ParameterStyle
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameters
 import org.eclipse.microprofile.openapi.annotations.tags.Tag
@@ -60,7 +62,8 @@ class EnrollmentController(
                 name = "studentIds",
                 description = "Lista de IDs dos alunos separados por vírgula",
                 example = "1,2,3",
-                required = true
+                style = ParameterStyle.FORM,
+                explode = Explode.FALSE
             )
         ]
     )
